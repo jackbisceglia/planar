@@ -1,0 +1,5 @@
+packages:
+  - "packages/*"
+
+# use when packages re-use deps and require compatible (ie. the same) versions
+# catalog:

@@ -1,0 +1,25 @@
+{
+  "name": "planar",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "echo '[TODO] insert root 'dev' command if applicable",
+    "typecheck": "pnpm -r run typecheck",
+    "lint": "pnpm -r run lint",
+    "format": "pnpm -r run format",
+    "@core": "pnpm -F @planar/core",
+    "@web": "pnpm -F @planar/web"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@tsconfig/node22": "^22.0.2",
+    "@tsconfig/strictest": "^2.0.6",
+    "@types/node": "^24.5.2",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "3.6.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.44.1"
+  },
+  "packageManager": "pnpm@10.11.0"
+}

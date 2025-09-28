@@ -1,0 +1,11 @@
+{
+  "name": "@planar/web",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "packageManager": "pnpm@10.11.0"
+}
