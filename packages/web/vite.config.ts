@@ -7,7 +7,7 @@ export default defineConfig({
   server: { port: 3000 },
   plugins: [
     tsConfigPaths(),
-    tanstackStart(),
+    tanstackStart({ spa: { enabled: true } }),
     viteSolid({ ssr: true }), // must come after start's vite plugin
   ],
 });
