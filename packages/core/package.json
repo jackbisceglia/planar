@@ -6,7 +6,6 @@
     "./*": "./src/*.ts"
   },
   "scripts": {
-    "dev": "echo '[TODO] insert core 'dev' command if applicable",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write ."
