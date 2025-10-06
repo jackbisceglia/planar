@@ -4,7 +4,11 @@
     "@tsconfig/node22/tsconfig.json"
   ],
   "compilerOptions": {
-    "types": ["node"]
+    "types": ["node"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ESNext"],
+    "target": "ESNext"
   },
   "include": [],
   "exclude": []

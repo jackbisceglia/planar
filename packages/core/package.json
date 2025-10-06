@@ -8,7 +8,19 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db": "tsx ./scripts/drizzle-kit.ts",
+    "db:seed": "tsx ./scripts/seed.user.ts"
   },
-  "packageManager": "pnpm@10.11.0"
+  "packageManager": "pnpm@10.11.0",
+  "dependencies": {
+    "@effect/platform": "^0.92.1",
+    "@effect/platform-node": "^0.98.3",
+    "@effect/sql": "^0.45.0",
+    "@effect/sql-drizzle": "^0.44.0",
+    "@effect/sql-pg": "^0.46.0",
+    "drizzle-orm": "^0.44.5",
+    "effect": "^3.17.14",
+    "postgres": "^3.4.7"
+  }
 }

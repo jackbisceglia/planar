@@ -1,0 +1,29 @@
+import { Effect, Redacted, pipe } from "effect";
+import { getDatabaseUrl } from "../src/drizzle";
+import { DotEnvConfigProviderLayer } from "../src/effect/env";
+import { execSync } from "child_process";
+
+/*
+ NOTE:
+ * this is a hack around drizzle-kit not supporting top-level-await
+   * in the future we should be able toe move the getDatabaseUrl() logic into the config itself, awaited at the top level.
+   * at that point, this can be removed.
+*/
+
+function runDrizzleKit(url: string) {
+  const args = process.argv.slice(2).join(" ");
+
+  execSync(`drizzle-kit ${args}`, {
+    stdio: "inherit",
+    env: { ...process.env, DATABASE_URL: url },
+  });
+}
+
+// get dbUrl, run script, run effect with config provider
+void pipe(
+  getDatabaseUrl(),
+  Effect.map((secret) => Redacted.value(secret)),
+  Effect.tap(runDrizzleKit),
+  Effect.provide(DotEnvConfigProviderLayer),
+  Effect.runPromise,
+);
