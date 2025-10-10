@@ -1,0 +1,11 @@
+[HIGH PRIORITY]
+  [ ] add auth
+  [ ] add zero
+  [ ] add design system
+    [ ] tailwind
+    [ ] solid version of shadcn
+
+[MED PRIORITY]
+
+[LOW PRIORITY]
+  [ ] move @core/src/scripts out of src/, and fix associated ts/lint issues
