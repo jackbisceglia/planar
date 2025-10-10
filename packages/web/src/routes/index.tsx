@@ -1,17 +1,6 @@
 import { createFileRoute } from "@tanstack/solid-router";
 import { createResource, Show, Suspense } from "solid-js";
 import { withRpc } from "../lib/rpc";
-import { getApiUrl } from "@planar/core/contracts/config";
-import { ConfigProvider, Effect, Layer } from "effect";
-
-const ViteEnvConfigProvider = ConfigProvider.fromJson(import.meta.env).pipe(
-  Layer.setConfigProvider,
-);
-
-export const getApiUrlSync = () =>
-  getApiUrl()
-    .pipe(Effect.provide(ViteEnvConfigProvider))
-    .pipe(Effect.runPromise);
 
 export const Route = createFileRoute("/")({ component: HomeRoute });
 
