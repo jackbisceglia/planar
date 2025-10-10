@@ -9,3 +9,4 @@
 
 [LOW PRIORITY]
   [ ] move @core/src/scripts out of src/, and fix associated ts/lint issues
+  [ ] add `.env.template`
