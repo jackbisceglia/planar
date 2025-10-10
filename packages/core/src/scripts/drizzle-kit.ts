@@ -1,6 +1,6 @@
 import { Effect, Redacted, pipe } from "effect";
-import { getDatabaseUrl } from "../src/drizzle";
-import { DotEnvConfigProviderLayer } from "../src/effect/env";
+import { getDatabaseUrl } from "../lib/drizzle";
+import { DotEnvConfigProviderLayer } from "../lib/effect/env.server";
 import { execSync } from "child_process";
 
 /*
