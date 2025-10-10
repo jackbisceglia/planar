@@ -1,6 +1,6 @@
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm/sql";
-import { DrizzleModelTypes } from "./drizzle/utils";
+import { DrizzleModelTypes } from "../../lib/drizzle/utils";
 
 export const userTable = pgTable("user", {
   id: uuid()

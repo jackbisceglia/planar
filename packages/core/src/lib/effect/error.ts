@@ -6,7 +6,7 @@ import { Cause, Data } from "effect";
  * @param name - The name of the error class
  * @returns A class that extends Data.TaggedError with the specified name
  */
-export function TaggedError(name: string) {
+export function TaggedError<T extends string>(name: T) {
   type E = {
     message: string;
     cause?: unknown;
@@ -23,5 +23,5 @@ export function TaggedError(name: string) {
   >(
     message: string,
     cause?: unknown,
-  ) => Cause.YieldableError & { readonly _tag: string } & Readonly<A>;
+  ) => Cause.YieldableError & { readonly _tag: T } & Readonly<A>;
 }

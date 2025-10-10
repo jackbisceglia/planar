@@ -1,37 +1,29 @@
 import { createFileRoute } from "@tanstack/solid-router";
-import { createServerFn } from "@tanstack/solid-start";
+import { createResource, Show, Suspense } from "solid-js";
+import { withRpc } from "../lib/rpc";
 
-const exampleServerFn = createServerFn({ method: "GET" }).handler(() => {
-  return "hello world";
-});
+export const Route = createFileRoute("/")({ component: HomeRoute });
 
-const updateCount = createServerFn({ method: "POST" }).handler(async () => {
-  const count = new Promise((resolve, _reject) => {
-    resolve("Hello from the Promise!");
-  });
+const fallbacks = {
+  fetching: () => <p>Loading...</p>,
+  notFound: () => <p>User Not Found</p>,
+};
 
-  return count;
-});
-
-export const Route = createFileRoute("/")({
-  component: Home,
-  loader: async () => await exampleServerFn(),
-});
-
-function Home() {
-  const state = Route.useLoaderData();
+function HomeRoute() {
+  const [data] = createResource(
+    withRpc("fetchUser")((rpc) =>
+      rpc.users.get({ payload: { id: crypto.randomUUID() } }),
+    ),
+  );
 
   return (
     <>
-      <h1>from the server: {state()}</h1>
-      <button
-        type="button"
-        onClick={() => {
-          void updateCount();
-        }}
-      >
-        Add 1 to {state()}?
-      </button>
+      <h1>testing effect rpc</h1>
+      <Suspense fallback={fallbacks.fetching()}>
+        <Show when={data()} fallback={fallbacks.notFound()}>
+          <p>1: {data()}</p>
+        </Show>
+      </Suspense>
     </>
   );
 }

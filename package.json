@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "pnpm -r run dev",
+    "dev:tmux": "tmux new-session -d -s planar 'cd packages/api && pnpm dev' \\; split-window -h 'cd packages/web && pnpm dev' \\; select-layout tiled \\; attach -t planar",
     "typecheck": "pnpm -r run typecheck",
     "lint": "pnpm -r run lint",
     "format": "pnpm -r run format",
     "@core": "pnpm -F @planar/core",
-    "@web": "pnpm -F @planar/web"
+    "@web": "pnpm -F @planar/web",
+    "@api": "pnpm -F @planar/api"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

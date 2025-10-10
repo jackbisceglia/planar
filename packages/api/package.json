@@ -1,10 +1,12 @@
 {
-  "name": "@planar/web",
+  "name": "@planar/api",
   "version": "0.0.0",
   "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
+    "dev": "tsx watch ./src/index.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write ."
@@ -12,12 +14,8 @@
   "packageManager": "pnpm@10.11.0",
   "dependencies": {
     "@planar/core": "workspace:*",
-    "@effect/platform": "catalog:",
-    "@tanstack/solid-router": "^1.132.17",
-    "@tanstack/solid-start": "^1.132.18",
     "effect": "catalog:",
-    "solid-js": "^1.9.9",
-    "vite": "^7.1.7",
-    "vite-plugin-solid": "^2.11.8"
+    "@effect/platform": "catalog:",
+    "@effect/platform-node": "catalog:"
   }
 }

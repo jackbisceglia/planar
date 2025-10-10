@@ -7,7 +7,7 @@ const url = parse(process.env.DATABASE_URL);
 
 export default defineConfig({
   dialect: "postgresql",
-  schema: "./src/**/*.schema.ts",
+  schema: "src/modules/**/schema.ts",
   dbCredentials: { url },
   strict: true,
   verbose: true,

@@ -4,6 +4,7 @@ import { tanstackStart } from "@tanstack/solid-start/plugin/vite";
 import viteSolid from "vite-plugin-solid";
 
 export default defineConfig({
+  envDir: "../../",
   server: { port: 3000 },
   plugins: [
     tsConfigPaths(),

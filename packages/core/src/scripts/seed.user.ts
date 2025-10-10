@@ -1,8 +1,7 @@
 import { Effect } from "effect";
-import { UserInsert } from "../src/drizzle/schema";
-import { Users } from "../src/user.entity";
-import { DatabaseLive } from "../src/drizzle/index";
-import { DotEnvConfigProviderLayer } from "../src/effect/env";
+import { DotEnvConfigProviderLayer } from "../lib/effect/env.server";
+import { Users } from "../modules/users/entity";
+import { UserInsert } from "../modules/users/schema";
 
 const mocks = [
   {
@@ -39,7 +38,6 @@ const run = Effect.fn("user.seed")(
     return results;
   },
   Effect.provide(Users.Default),
-  Effect.provide(DatabaseLive),
   Effect.provide(DotEnvConfigProviderLayer),
 );
 
