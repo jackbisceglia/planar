@@ -9,8 +9,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "db": "tsx ./scripts/drizzle-kit.ts",
-    "db:seed": "tsx ./scripts/seed.user.ts"
+    "db": "tsx ./src/scripts/drizzle-kit.ts",
+    "db:seed": "tsx ./src/scripts/seed.user.ts"
   },
   "packageManager": "pnpm@10.11.0",
   "dependencies": {
