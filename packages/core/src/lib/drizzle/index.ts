@@ -1,10 +1,11 @@
-import { Config, Layer, pipe } from "effect";
+import { Config, Effect, Layer, pipe } from "effect";
 import * as PgDrizzle from "@effect/sql-drizzle/Pg";
 import * as schema from "./schema";
 import { PgClient } from "@effect/sql-pg";
 
 // database requirement for drizzle w/ schema type inference
 export const Database = PgDrizzle.make<typeof schema>({ schema });
+export type Database = Effect.Effect.Success<typeof Database>;
 
 export function getDatabaseUrl() {
   return pipe(
