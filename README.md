@@ -6,7 +6,7 @@ a [linear](https://linear.app/) clone built with:
 
 - [effect](https://effect.website) - typescript framework for type-safe, composable programs
 - [solid.js](https://solidjs.com) - reactive ui library
-- [tanstack start](https://tanstack.com/start/latest) - full-stack react framework
+- [tanstack start](https://tanstack.com/start/latest) - full-stack web framework
 - [zero](https://zero.rocicorp.dev/) - [todo] sync engine 
 
 ### install
