@@ -6,8 +6,11 @@ import { UsersGroupLive } from "./groups.users";
 import { Api } from "@planar/core/contracts/index";
 import { DotEnvConfigProviderLayer } from "@planar/core/lib/effect/env.server";
 import { ApiConfig } from "@planar/core/contracts/config";
+import { AuthGroupLive } from "./groups.auth";
 
-const ApiLive = HttpApiBuilder.api(Api).pipe(Layer.provide(UsersGroupLive));
+const ApiLive = HttpApiBuilder.api(Api)
+  .pipe(Layer.provide(UsersGroupLive))
+  .pipe(Layer.provide(AuthGroupLive));
 
 const NodeHttpLive = NodeHttpServer.layerConfig(createServer, {
   port: ApiConfig.pipe(Config.map((config) => config.port)),
