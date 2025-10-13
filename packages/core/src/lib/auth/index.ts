@@ -3,11 +3,6 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { Database, DatabaseLive } from "../drizzle";
 import { Effect, pipe } from "effect";
 import { DotEnvConfigProviderLayer } from "../effect/env.server";
-import { TaggedError } from "../effect/error";
-
-export class BetterAuthErrorInternal extends TaggedError(
-  "BetterAuthErrorInternal",
-) {}
 
 const createBetterAuth = (database: Database) =>
   betterAuth({
