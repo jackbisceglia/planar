@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "db": "tsx ./src/scripts/drizzle-kit.ts",
-    "db:seed": "tsx ./src/scripts/seed.user.ts",
+    "db:seed": "tsx ./src/scripts/seed.issue.ts",
     "db:reset": "tsx ./src/scripts/seed.reset.ts"
   },
   "packageManager": "pnpm@10.11.0",

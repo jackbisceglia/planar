@@ -21,6 +21,6 @@ export function withRpc(name: string) {
       return result;
     });
 
-    return () => RuntimeClient.runPromise(call()).then(RuntimeClient.dispose);
+    return () => RuntimeClient.runPromise(call());
   };
 }

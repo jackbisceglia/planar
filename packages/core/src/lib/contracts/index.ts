@@ -1,6 +1,6 @@
 import { HttpApi, HttpApiError } from "@effect/platform";
-import { UsersGroup } from "./user";
+import { IssuesGroup } from "./issues";
 
 export const Api = HttpApi.make("Api")
-  .add(UsersGroup)
+  .add(IssuesGroup)
   .addError(HttpApiError.InternalServerError);

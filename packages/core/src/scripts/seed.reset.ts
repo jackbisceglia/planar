@@ -1,5 +1,5 @@
 import { Console, Effect } from "effect";
-import { Database, DatabaseLive } from "../lib/drizzle";
+import { Database } from "../lib/drizzle";
 import { sql } from "drizzle-orm";
 import { RuntimeCli } from "./cli.runtime";
 

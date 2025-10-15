@@ -1,7 +1,7 @@
-import { Effect, Layer, ManagedRuntime } from "effect";
+import { Layer, ManagedRuntime } from "effect";
 import { NodeContext } from "@effect/platform-node";
 import { createConfigProviderFromDotEnv } from "../lib/effect/config.from-dotenv";
-import { Users } from "../modules/users/entity";
+import { Issues } from "../modules/issues/entity";
 import { DatabaseLive } from "../lib/drizzle";
 
 export const DotEnvConfigProvider =
@@ -9,6 +9,6 @@ export const DotEnvConfigProvider =
 
 export const RuntimeCli = NodeContext.layer
   .pipe(Layer.merge(DatabaseLive))
-  .pipe(Layer.merge(Users.Default))
+  .pipe(Layer.merge(Issues.Default))
   .pipe(Layer.provide(DotEnvConfigProvider))
   .pipe(ManagedRuntime.make);
