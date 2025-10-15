@@ -23,4 +23,4 @@ const Program = HttpApiBuilder.serve()
   .pipe(Layer.provide(NodeHttpLive))
   .pipe(Layer.launch);
 
-void RuntimeServer.runPromise(Program);
+await RuntimeServer.runPromise(Program).then(RuntimeServer.dispose);
