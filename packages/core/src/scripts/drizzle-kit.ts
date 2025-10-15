@@ -23,4 +23,4 @@ const Program = getDatabaseUrl()
   .pipe(Effect.map((secret) => Redacted.value(secret)))
   .pipe(Effect.tap(runDrizzleKit));
 
-void RuntimeCli.runPromise(Program);
+void RuntimeCli.runPromise(Program).then(RuntimeCli.dispose);

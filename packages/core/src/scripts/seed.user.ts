@@ -27,7 +27,7 @@ const setup = Effect.fn(function* () {
   yield* entity.removeAll();
 });
 
-const run = Effect.fn("user.seed")(function* (users: UserInsert[]) {
+const main = Effect.fn("user.seed")(function* (users: UserInsert[]) {
   const entity = yield* Users;
 
   yield* setup();
@@ -37,6 +37,6 @@ const run = Effect.fn("user.seed")(function* (users: UserInsert[]) {
   return results;
 });
 
-const Program = run(mocks);
+const Program = main(mocks);
 
-void RuntimeCli.runPromise(Program);
+void RuntimeCli.runPromise(Program).then(RuntimeCli.dispose);
