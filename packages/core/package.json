@@ -11,7 +11,9 @@
     "format": "prettier --write .",
     "db": "tsx ./src/scripts/drizzle-kit.ts",
     "db:seed": "tsx ./src/scripts/seed.issue.ts",
-    "db:reset": "tsx ./src/scripts/seed.reset.ts"
+    "db:reset": "tsx ./src/scripts/seed.reset.ts",
+    "auth": "pnpm dlx @better-auth/cli",
+    "auth:generate": "pnpm dlx @better-auth/cli@latest generate --config ./src/scripts/better-auth.ts --output ./src/modules/auth/schema.ts"
   },
   "packageManager": "pnpm@10.11.0",
   "dependencies": {
@@ -20,6 +22,7 @@
     "@effect/sql": "^0.45.0",
     "@effect/sql-drizzle": "^0.44.0",
     "@effect/sql-pg": "^0.46.0",
+    "better-auth": "catalog:",
     "drizzle-orm": "^0.44.5",
     "effect": "catalog:",
     "postgres": "^3.4.7"

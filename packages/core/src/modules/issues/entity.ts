@@ -23,6 +23,11 @@ export class Issues extends Effect.Service<Issues>()("Issues", {
 
         return row;
       }),
+      getAll: Effect.fn("issue.getAll")(function* getAll() {
+        const rows = yield* database.query.issueTable.findMany();
+
+        return rows;
+      }),
       create: Effect.fn("issue.create")(function* create(issue: IssueInsert) {
         const [row] = yield* database
           .insert(issueTable)

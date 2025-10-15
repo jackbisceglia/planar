@@ -10,6 +10,11 @@ export const IssuesGroup = HttpApiGroup.make("issues")
       .addSuccess(Schema.Union(Issue, Schema.Null)),
   )
   .add(
+    HttpApiEndpoint.get("getAll")`/all`
+      .addError(HttpApiError.NotFound)
+      .addSuccess(Schema.Array(Issue)),
+  )
+  .add(
     HttpApiEndpoint.post("create")`/`
       .setPayload(IssueInsert)
       .addError(HttpApiError.BadRequest)
