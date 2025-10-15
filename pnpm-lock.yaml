@@ -104,6 +104,9 @@ importers:
       '@effect/platform':
         specifier: 'catalog:'
         version: 0.92.1(effect@3.17.14)
+      '@effect/platform-browser':
+        specifier: ^0.72.0
+        version: 0.72.0(@effect/platform@0.92.1(effect@3.17.14))(effect@3.17.14)
       '@planar/core':
         specifier: workspace:*
         version: link:../core
@@ -289,6 +292,12 @@ packages:
         optional: true
       lmdb:
         optional: true
+
+  '@effect/platform-browser@0.72.0':
+    resolution: {integrity: sha512-xLlhR2S5yGo7//i8rTOiu1wCyrmrotXk+lK7Y257odxmQ2+HhV4wA2E+xFa0bFbHnqFCE3Yza9r0BkA3y1tgag==}
+    peerDependencies:
+      '@effect/platform': ^0.92.0
+      effect: ^3.18.0
 
   '@effect/platform-node-shared@0.51.4':
     resolution: {integrity: sha512-xElU9+cNPa1BnUHAZ3sVVanuuKof8oWQhK7rbyHNqgWM7CZTjv7x9VMDs0X05+1OcTQnnW3E+SrZKIPCfcYlDQ==}
@@ -2446,6 +2455,12 @@ snapshots:
       '@effect/platform': 0.92.1(effect@3.17.14)
       effect: 3.17.14
       uuid: 11.1.0
+
+  '@effect/platform-browser@0.72.0(@effect/platform@0.92.1(effect@3.17.14))(effect@3.17.14)':
+    dependencies:
+      '@effect/platform': 0.92.1(effect@3.17.14)
+      effect: 3.17.14
+      multipasta: 0.2.7
 
   '@effect/platform-node-shared@0.51.4(@effect/cluster@0.50.3(@effect/platform@0.92.1(effect@3.17.14))(@effect/rpc@0.71.0(@effect/platform@0.92.1(effect@3.17.14))(effect@3.17.14))(@effect/sql@0.45.0(@effect/experimental@0.55.0(@effect/platform@0.92.1(effect@3.17.14))(effect@3.17.14))(@effect/platform@0.92.1(effect@3.17.14))(effect@3.17.14))(@effect/workflow@0.11.3(@effect/platform@0.92.1(effect@3.17.14))(@effect/rpc@0.71.0(@effect/platform@0.92.1(effect@3.17.14))(effect@3.17.14))(effect@3.17.14))(effect@3.17.14))(@effect/platform@0.92.1(effect@3.17.14))(@effect/rpc@0.71.0(@effect/platform@0.92.1(effect@3.17.14))(effect@3.17.14))(@effect/sql@0.45.0(@effect/experimental@0.55.0(@effect/platform@0.92.1(effect@3.17.14))(effect@3.17.14))(@effect/platform@0.92.1(effect@3.17.14))(effect@3.17.14))(effect@3.17.14)':
     dependencies:

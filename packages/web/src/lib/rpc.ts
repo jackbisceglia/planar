@@ -1,16 +1,14 @@
-import { FetchHttpClient, HttpApiClient } from "@effect/platform";
-import { getApiUrl } from "@planar/core/contracts/config";
-import { Api } from "@planar/core/contracts/index";
+import { HttpApiClient } from "@effect/platform";
 import { Effect, pipe } from "effect";
-import { ViteEnvConfigProviderLayer } from "./env";
+import { getApiUrl } from "@planar/core/lib/utils/constants";
+import { Api } from "@planar/core/lib/contracts/index";
+import { RuntimeClient } from "./client.runtime";
 
 type RpcClient = Effect.Effect.Success<typeof RpcClient>;
 
 const RpcClient = pipe(
   getApiUrl(),
   Effect.flatMap((baseUrl) => HttpApiClient.make(Api, { baseUrl })),
-  Effect.provide(FetchHttpClient.layer),
-  Effect.provide(ViteEnvConfigProviderLayer),
 );
 
 export function withRpc(name: string) {
@@ -23,6 +21,6 @@ export function withRpc(name: string) {
       return result;
     });
 
-    return () => Effect.runPromise(call());
+    return () => RuntimeClient.runPromise(call());
   };
 }

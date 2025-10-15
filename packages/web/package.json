@@ -11,8 +11,9 @@
   },
   "packageManager": "pnpm@10.11.0",
   "dependencies": {
-    "@planar/core": "workspace:*",
     "@effect/platform": "catalog:",
+    "@effect/platform-browser": "^0.72.0",
+    "@planar/core": "workspace:*",
     "@tanstack/solid-router": "^1.132.17",
     "@tanstack/solid-start": "^1.132.18",
     "effect": "catalog:",

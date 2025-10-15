@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import { DotEnvConfigProviderLayer } from "../lib/effect/env.server";
 import { Users } from "../modules/users/entity";
 import { UserInsert } from "../modules/users/schema";
+import { RuntimeCli } from "./cli.runtime";
 
 const mocks = [
   {
@@ -27,18 +27,16 @@ const setup = Effect.fn(function* () {
   yield* entity.removeAll();
 });
 
-const run = Effect.fn("user.seed")(
-  function* (users: UserInsert[]) {
-    const entity = yield* Users;
+const run = Effect.fn("user.seed")(function* (users: UserInsert[]) {
+  const entity = yield* Users;
 
-    yield* setup();
+  yield* setup();
 
-    const results = yield* Effect.forEach(users, (user) => entity.create(user));
+  const results = yield* Effect.forEach(users, (user) => entity.create(user));
 
-    return results;
-  },
-  Effect.provide(Users.Default),
-  Effect.provide(DotEnvConfigProviderLayer),
-);
+  return results;
+});
 
-void Effect.runPromise(run(mocks));
+const Program = run(mocks);
+
+void RuntimeCli.runPromise(Program);

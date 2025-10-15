@@ -1,5 +1,5 @@
 import { HttpApiBuilder } from "@effect/platform";
-import { Api } from "@planar/core/contracts/index";
+import { Api } from "@planar/core/lib/contracts/index";
 import { Effect, Layer } from "effect";
 import { toInternalServerError } from "./errors";
 import { Users } from "@planar/core/modules/users/entity";

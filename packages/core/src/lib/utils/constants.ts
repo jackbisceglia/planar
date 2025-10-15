@@ -1,9 +1,5 @@
-import { Config, Effect } from "effect";
-
-export const ApiConfig = Config.all({
-  port: Config.number("VITE_API_PORT").pipe(Config.withDefault(undefined)),
-  url: Config.string("VITE_API_URL"),
-});
+import { Effect } from "effect";
+import { ApiConfig } from "../config/api";
 
 /**
  * Returns the API URL with optional port appended.

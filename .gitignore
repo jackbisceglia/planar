@@ -1,6 +1,9 @@
 # dependencies
 node_modules/
 
+# web
+.tanstack/
+
 # scratchpad
 *.scratch.txt
 *.scratch.md
