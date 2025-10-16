@@ -21,7 +21,7 @@ export function getDatabaseUrl() {
 const PgLive = PgClient.layerConfig({
   url: getDatabaseUrl(),
   prepare: Config.succeed(false),
-});
+}).pipe(Layer.orDie);
 
 const DrizzleLive = PgDrizzle.layer.pipe(Layer.provide(PgLive));
 

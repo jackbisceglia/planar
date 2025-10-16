@@ -1,7 +1,7 @@
 import { Console, Effect } from "effect";
 import { Database } from "../lib/drizzle";
 import { sql } from "drizzle-orm";
-import { RuntimeCli } from "./cli.runtime";
+import { RuntimeCli } from "./cli-runtime";
 
 const main = Effect.fn("user.seed")(function* () {
   const db = yield* Database;

@@ -6,9 +6,10 @@ import {
   createResource,
   createSignal,
 } from "solid-js";
-import { withRpc } from "../lib/rpc";
+import { withRpc } from "../lib/rpc-client";
 import { IssueInsert } from "@planar/core/modules/issues/schema";
-import { auth } from "../lib/auth";
+import { auth } from "../lib/auth-client";
+import { url } from "../lib/utils";
 
 const initial = {
   name: "",
@@ -69,7 +70,9 @@ function SignUp(props: {
   );
 }
 
-function SignIn(props: { initial: { email: string; password: string } }) {
+function SignInEmailPassword(props: {
+  initial: { email: string; password: string };
+}) {
   const [email, setEmail] = createSignal(props.initial.email);
   const [password, setPassword] = createSignal(props.initial.password);
 
@@ -104,6 +107,28 @@ function SignIn(props: { initial: { email: string; password: string } }) {
         onInput={(e) => setPassword(e.currentTarget.value)}
       />
       <button type="submit">Sign In</button>
+    </form>
+  );
+}
+
+function SignInGithub() {
+  async function handleSignIn() {
+    await auth.signIn.social({
+      provider: "github",
+      callbackURL: url,
+    });
+  }
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        void handleSignIn().then(() => {
+          console.log("githubbing");
+        });
+      }}
+    >
+      <button type="submit">Sign In With GitHub</button>
     </form>
   );
 }
@@ -143,7 +168,8 @@ function HomeRoute() {
         fallback={
           <div>
             <p>Not logged in</p>
-            <SignIn initial={initial} />
+            <SignInEmailPassword initial={initial} />
+            <SignInGithub />
             <br />
             <br />
             <SignUp initial={initial} />

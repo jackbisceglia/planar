@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { Issues } from "../modules/issues/entity";
 import { IssueInsert } from "../modules/issues/schema";
-import { RuntimeCli } from "./cli.runtime";
+import { RuntimeCli } from "./cli-runtime";
 
 const mocks = [
   {

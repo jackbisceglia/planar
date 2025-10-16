@@ -1,13 +1,12 @@
 import { HttpApiClient } from "@effect/platform";
-import { Effect, pipe } from "effect";
-import { getApiUrl } from "@planar/core/lib/utils/constants";
+import { Effect } from "effect";
 import { Api } from "@planar/core/lib/contracts/index";
-import { RuntimeClient } from "./client.runtime";
+import { RuntimeClient } from "./client-runtime";
+import { ApiUrl } from "@planar/core/lib/config/api";
 
 type RpcClient = Effect.Effect.Success<typeof RpcClient>;
 
-const RpcClient = pipe(
-  getApiUrl(),
+const RpcClient = ApiUrl.pipe(
   Effect.flatMap((baseUrl) => HttpApiClient.make(Api, { baseUrl })),
 );
 

@@ -1,7 +1,7 @@
 import { Effect, Redacted } from "effect";
 import { getDatabaseUrl } from "../lib/drizzle";
 import { execSync } from "child_process";
-import { RuntimeCli } from "./cli.runtime";
+import { RuntimeCli } from "./cli-runtime";
 
 /*
  NOTE:
