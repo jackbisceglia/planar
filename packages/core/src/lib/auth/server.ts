@@ -11,7 +11,6 @@ export const Auth = Effect.gen(function* () {
   const database = yield* Database;
 
   const betterAuthInstance = betterAuth({
-    // TODO: fix to be contextual on env
     trustedOrigins: [webUrl],
     socialProviders: {
       github: {

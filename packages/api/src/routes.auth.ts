@@ -17,7 +17,6 @@ const handler = Effect.fn("betterAuth.handler")(function* (input: Input) {
   const request = NodeHttpServerRequest.toIncomingMessage(input.request);
   const response = NodeHttpServerRequest.toServerResponse(input.request);
 
-  // TODO: fix to be contextual on env
   response.setHeader("Access-Control-Allow-Origin", webUrl);
   response.setHeader("Access-Control-Allow-Methods", "GET, POST");
   response.setHeader("Access-Control-Allow-Headers", "Content-Type");
