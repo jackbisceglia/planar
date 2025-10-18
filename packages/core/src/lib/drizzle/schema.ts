@@ -1,1 +1,2 @@
-export * from "../../modules/users/schema";
+export * from "../../modules/issues/schema";
+export * from "../../modules/auth/schema";

@@ -13,9 +13,10 @@
   },
   "packageManager": "pnpm@10.11.0",
   "dependencies": {
-    "@planar/core": "workspace:*",
-    "effect": "catalog:",
     "@effect/platform": "catalog:",
-    "@effect/platform-node": "catalog:"
+    "@effect/platform-node": "catalog:",
+    "@planar/core": "workspace:*",
+    "better-auth": "catalog:",
+    "effect": "catalog:"
   }
 }

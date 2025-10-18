@@ -12,3 +12,12 @@
 export function invoke<T>(fn: () => T): T {
   return fn();
 }
+
+export const buildUrlWithPortOptional = (
+  url: string,
+  port: number | undefined,
+) => {
+  if (!port) return url;
+
+  return `${url}:${port.toString()}`;
+};

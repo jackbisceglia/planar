@@ -1,7 +1,7 @@
-import { Effect, Redacted, pipe } from "effect";
+import { Effect, Redacted } from "effect";
 import { getDatabaseUrl } from "../lib/drizzle";
-import { DotEnvConfigProviderLayer } from "../lib/effect/env.server";
 import { execSync } from "child_process";
+import { RuntimeCli } from "./cli-runtime";
 
 /*
  NOTE:
@@ -19,11 +19,8 @@ function runDrizzleKit(url: string) {
   });
 }
 
-// get dbUrl, run script, run effect with config provider
-void pipe(
-  getDatabaseUrl(),
-  Effect.map((secret) => Redacted.value(secret)),
-  Effect.tap(runDrizzleKit),
-  Effect.provide(DotEnvConfigProviderLayer),
-  Effect.runPromise,
-);
+const Program = getDatabaseUrl()
+  .pipe(Effect.map((secret) => Redacted.value(secret)))
+  .pipe(Effect.tap(runDrizzleKit));
+
+void RuntimeCli.runPromise(Program).then(RuntimeCli.dispose);

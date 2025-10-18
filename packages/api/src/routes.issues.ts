@@ -1,33 +1,34 @@
 import { HttpApiBuilder } from "@effect/platform";
-import { Api } from "@planar/core/contracts/index";
-import { Effect, Layer } from "effect";
+import { Api } from "@planar/core/lib/contracts/index";
+import { Effect } from "effect";
 import { toInternalServerError } from "./errors";
-import { Users } from "@planar/core/modules/users/entity";
+import { Issues } from "@planar/core/modules/issues/entity";
 
-const UsersGroupHandlers = HttpApiBuilder.group(
+export const IssuesGroupLive = HttpApiBuilder.group(
   Api,
-  "users",
+  "issues",
   Effect.fn(function* (handlers) {
-    const entity = yield* Users;
+    const entity = yield* Issues;
 
     return handlers
       .handle("get", (input) =>
         entity.get(input.payload.id).pipe(
           Effect.catchTags({
             SqlError: toInternalServerError,
-            UserNotFoundError: () => Effect.succeed(null),
+            IssueNotFoundError: () => Effect.succeed(null),
           }),
         ),
       )
+      .handle("getAll", () =>
+        entity
+          .getAll()
+          .pipe(Effect.catchTags({ SqlError: toInternalServerError })),
+      )
       .handle("create", (input) =>
         entity
-          .create({ ...input.payload, image: "https://google.com" })
+          .create({ ...input.payload })
           .pipe(Effect.map((result) => result.id))
           .pipe(Effect.catchTags({ SqlError: toInternalServerError })),
       );
   }),
-);
-
-export const UsersGroupLive = UsersGroupHandlers.pipe(
-  Layer.provide(Users.Default),
 );
