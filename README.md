@@ -7,7 +7,7 @@ a [linear](https://linear.app/) clone built with:
 - [effect](https://effect.website) - typescript framework for type-safe, composable programs
 - [solid.js](https://solidjs.com) - reactive ui library
 - [tanstack start](https://tanstack.com/start/latest) - full-stack web framework
-- [zero](https://zero.rocicorp.dev/) - [todo] sync engine 
+- [zero](https://zero.rocicorp.dev/) - [todo] sync engine
 
 ### install
 
@@ -19,9 +19,17 @@ a [linear](https://linear.app/) clone built with:
 **setup:**
 
 1. copy `.env.template` to `.env`
-2. fill out database fields with any postgres transaction pooler endpoint
+2. configure database fields with any postgres transaction pooler endpoint
    - easiest: setup a [supabase](https://supabase.com) project → click connect → transaction pooler section → copy parameters
-3. `pnpm install`
+3. configure auth fields:
+   - set `AUTH_SECRET` using `openssl rand -base64 32`
+   - create github oauth app via https://github.com/settings/developers
+     - app name: anything (e.g., 'planar-dev')
+     - homepage url: `http://localhost:3000`
+     - authorization callback url: `http://localhost:3001/api/auth/callback/github`
+     - copy client_id/secret to `.env`
+   - set `VITE_STAGE` to your environment identifier (e.g. foo-bar) to signify the environment that code is being run in
+4. `pnpm install`
 
 ### repo structure
 
@@ -40,6 +48,12 @@ a [linear](https://linear.app/) clone built with:
 - `pnpm format` - run prettier across all packages (recursively)
 - `pnpm @core` / `@web` / `@api <command>` - run command in specific package (recursively)
   - e.g. `pnpm @web add react`
+
+### database
+
+- define tables in `packages/core/src/modules/**/schema.ts`, as drizzle cli looks here
+- re-export tables in `packages/core/src/lib/drizzle/schema.ts`, for orm type safety
+- `pnpm @core db push` - push schema changes to database
 
 ### conventions
 
