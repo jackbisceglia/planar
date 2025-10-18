@@ -28,7 +28,7 @@ a [linear](https://linear.app/) clone built with:
      - homepage url: `http://localhost:3000`
      - authorization callback url: `http://localhost:3001/api/auth/callback/github`
      - copy client_id/secret to `.env`
-   - set `VITE_STAGE` to your environment identifier (used in auth app name)
+   - set `VITE_STAGE` to your environment identifier (e.g. foo-bar) to signify the environment that code is being run in
 4. `pnpm install`
 
 ### repo structure
