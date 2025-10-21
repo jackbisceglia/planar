@@ -14,14 +14,16 @@ export const Route = createRootRoute({
       { title: "planar" },
     ],
   }),
-  component: RootComponent,
+  shellComponent: RootDocument,
 });
 
-function RootComponent() {
+function RootDocument() {
   return (
     <>
       <HeadContent />
-      <Outlet />
+      <body>
+        <Outlet />
+      </body>
       <Scripts />
     </>
   );

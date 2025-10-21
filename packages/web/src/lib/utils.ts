@@ -1,4 +1,9 @@
 import { WebUrl } from "@planar/core/lib/config/web";
-import { RuntimeClient } from "./client-runtime";
+import { RuntimeClient } from "./setup/client-runtime";
+import { ApiUrl } from "@planar/core/lib/config/api";
+import { Effect } from "effect";
 
-export const url = await WebUrl.pipe(RuntimeClient.runPromise);
+const [web, api] = await RuntimeClient.runPromise(Effect.all([WebUrl, ApiUrl]));
+
+export const webBaseUrl = web;
+export const apiBaseUrl = api;
