@@ -1,7 +1,7 @@
 import { HttpApiClient } from "@effect/platform";
 import { Effect } from "effect";
 import { Api } from "@planar/core/lib/contracts/index";
-import { RuntimeClient } from "./client-runtime";
+import { RuntimeClient } from "../setup/client-runtime";
 import { ApiUrl } from "@planar/core/lib/config/api";
 
 type RpcClient = Effect.Effect.Success<typeof RpcClient>;
@@ -20,6 +20,6 @@ export function withRpc(name: string) {
       return result;
     });
 
-    return () => RuntimeClient.runPromise(call());
+    return RuntimeClient.runPromise(call());
   };
 }

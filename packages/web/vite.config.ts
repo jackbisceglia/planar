@@ -8,7 +8,9 @@ export default defineConfig({
   server: { port: 3000 },
   plugins: [
     tsConfigPaths(),
-    tanstackStart({ spa: { enabled: true } }),
+    tanstackStart({
+      router: { routeToken: "layout" },
+    }),
     viteSolid({ ssr: true }), // must come after start's vite plugin
   ],
 });

@@ -1,10 +1,15 @@
 /// <reference types="vite/client" />
+import { HydrationScript } from "solid-js/web";
 import {
   Outlet,
   createRootRoute,
   HeadContent,
   Scripts,
 } from "@tanstack/solid-router";
+import { ParentProps } from "solid-js";
+
+// TODO: this should be dynamic based on the user/session
+export const defaultWorkspace = "planar";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -14,15 +19,26 @@ export const Route = createRootRoute({
       { title: "planar" },
     ],
   }),
+  context: () => ({ workspace: defaultWorkspace }),
+  shellComponent: RootShell,
   component: RootComponent,
 });
 
-function RootComponent() {
+function RootShell(props: ParentProps) {
   return (
-    <>
-      <HeadContent />
-      <Outlet />
-      <Scripts />
-    </>
+    <html>
+      <head>
+        <HydrationScript />
+      </head>
+      <body style={{ margin: 0 }}>
+        <HeadContent />
+        {props.children}
+        <Scripts />
+      </body>
+    </html>
   );
+}
+
+function RootComponent() {
+  return <Outlet />;
 }
