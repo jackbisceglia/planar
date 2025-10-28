@@ -10,7 +10,6 @@ export default defineConfig({
     tsConfigPaths(),
     tanstackStart({
       router: { routeToken: "layout" },
-      spa: { enabled: true },
     }),
     viteSolid({ ssr: true }), // must come after start's vite plugin
   ],

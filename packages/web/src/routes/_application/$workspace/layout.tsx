@@ -14,6 +14,7 @@ import {
 } from "../../../lib/auth/assert";
 import { MatchTag } from "../../../lib/utils.solid";
 import { slugify } from "../../../lib/utils";
+import { useCleanupEffectRuntime } from "../../../lib/setup/client-runtime";
 
 const ErrorComponent = (props: ErrorComponentProps) => {
   const error = ensureTaggedError(props.error);
@@ -31,6 +32,7 @@ const ErrorComponent = (props: ErrorComponentProps) => {
 };
 
 export const Route = createFileRoute("/_application/$workspace")({
+  ssr: false,
   component: WorkspaceLayout,
   errorComponent: ErrorComponent,
   beforeLoad: async (options) => {
@@ -51,6 +53,8 @@ function WorkspaceLayout() {
   const signOut = useSignOut();
 
   const workspaceDisplay = () => slugify.decodeCapitalized(slug());
+
+  useCleanupEffectRuntime();
 
   return (
     <main style={{ padding: "1.5rem 12rem" }}>

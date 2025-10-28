@@ -2,11 +2,10 @@ import { createFileRoute, redirect } from "@tanstack/solid-router";
 import { auth } from "../../lib/auth/better-auth-client";
 import { useProviderSignIn } from "../../lib/auth/hooks";
 import { defaultWorkspace } from "../__root";
+import { createIsomorphicFn } from "@tanstack/solid-start";
 
-export const Route = createFileRoute("/_public/")({
-  component: PublicIndexPage,
-  pendingComponent: () => <div>LOADING SESSION...</div>,
-  beforeLoad: async () => {
+const assertUserUnauthenticatedClientOnly = createIsomorphicFn().client(
+  async function () {
     const authentication = await auth.getSession();
 
     if (authentication.data) {
@@ -16,6 +15,14 @@ export const Route = createFileRoute("/_public/")({
         params: { workspace: defaultWorkspace },
       });
     }
+  },
+);
+
+export const Route = createFileRoute("/_public/")({
+  component: PublicIndexPage,
+  pendingComponent: () => <div>LOADING SESSION...</div>,
+  beforeLoad: async () => {
+    await assertUserUnauthenticatedClientOnly();
 
     return { workspace: defaultWorkspace };
   },
