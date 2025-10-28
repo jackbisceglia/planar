@@ -31,7 +31,7 @@ const ErrorComponent = (props: ErrorComponentProps) => {
 };
 
 export const Route = createFileRoute("/_application/$workspace")({
-  component: RouteComponent,
+  component: WorkspaceLayout,
   errorComponent: ErrorComponent,
   beforeLoad: async (options) => {
     const authentication = await auth.getSession();
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/_application/$workspace")({
   },
 });
 
-function RouteComponent() {
+function WorkspaceLayout() {
   const user = useUser();
   const slug = Route.useRouteContext({ select: (s) => s.workspace });
   const signOut = useSignOut();

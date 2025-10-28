@@ -18,11 +18,11 @@ export const Route = createRootRoute({
       { title: "planar" },
     ],
   }),
-  component: RootDocument,
+  component: Root,
   context: () => ({ workspace: defaultWorkspace }),
 });
 
-function RootDocument() {
+function Root() {
   useCleanupEffectRuntime();
 
   return (

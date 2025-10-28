@@ -42,7 +42,7 @@ function NewIssueForm() {
 }
 
 export const Route = createFileRoute("/_application/$workspace/")({
-  component: RouteComponent,
+  component: WorkspacePage,
   loader: async () => {
     const issues = await getIssues();
 
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/_application/$workspace/")({
   },
 });
 
-function RouteComponent() {
+function WorkspacePage() {
   const data = Route.useLoaderData();
 
   return (

@@ -4,7 +4,7 @@ import { useProviderSignIn } from "../../lib/auth/hooks";
 import { defaultWorkspace } from "../__root";
 
 export const Route = createFileRoute("/_public/")({
-  component: HomeRoute,
+  component: PublicIndexPage,
   pendingComponent: () => <div>LOADING SESSION...</div>,
   beforeLoad: async () => {
     const authentication = await auth.getSession();
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_public/")({
   },
 });
 
-function HomeRoute() {
+function PublicIndexPage() {
   const route = Route.useRouteContext();
 
   const signInWithGithub = useProviderSignIn("github", route().workspace);

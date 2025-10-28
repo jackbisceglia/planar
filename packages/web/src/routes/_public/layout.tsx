@@ -1,10 +1,10 @@
 import { createFileRoute, Outlet } from "@tanstack/solid-router";
 
 export const Route = createFileRoute("/_public")({
-  component: RouteComponent,
+  component: PublicLayout,
 });
 
-function RouteComponent() {
+function PublicLayout() {
   return (
     <main>
       <Outlet />
