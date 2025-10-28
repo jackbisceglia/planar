@@ -5,6 +5,10 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/solid-router";
+import { useCleanupEffectRuntime } from "../lib/setup/client-runtime";
+
+// TODO: this should be dynamic based on the user/session
+export const defaultWorkspace = "planar";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -14,16 +18,17 @@ export const Route = createRootRoute({
       { title: "planar" },
     ],
   }),
-  shellComponent: RootDocument,
+  component: RootDocument,
+  context: () => ({ workspace: defaultWorkspace }),
 });
 
 function RootDocument() {
+  useCleanupEffectRuntime();
+
   return (
     <>
       <HeadContent />
-      <body>
-        <Outlet />
-      </body>
+      <Outlet />
       <Scripts />
     </>
   );

@@ -1,3 +1,4 @@
+import { getRouteApi, useNavigate } from "@tanstack/solid-router";
 import { webBaseUrl } from "../utils";
 import { auth } from "./better-auth-client";
 
@@ -23,6 +24,14 @@ const providerSignInConfiguration = {
 export const useAuthentication = auth.useSession;
 
 /**
+ * Re-export of auth.useSession for authentication state management
+ */
+export const useUser = () =>
+  getRouteApi("/_application/$workspace").useRouteContext({
+    select: (s) => s.user,
+  });
+
+/**
  * Re-export of auth.signIn.social wrapped with provider-specific configuration
  */
 export const useProviderSignIn = (provider: Provider, homeRoute: string) => {
@@ -36,4 +45,11 @@ export const useProviderSignIn = (provider: Provider, homeRoute: string) => {
   return () => auth.signIn.social(options);
 };
 
-export const useSignOut = () => auth.signOut;
+export const useSignOut = () => {
+  const navigate = useNavigate();
+
+  return async () => {
+    await auth.signOut();
+    void navigate({ to: "/" });
+  };
+};

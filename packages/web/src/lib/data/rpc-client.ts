@@ -20,6 +20,6 @@ export function withRpc(name: string) {
       return result;
     });
 
-    return () => RuntimeClient.runPromise(call());
+    return RuntimeClient.runPromise(call());
   };
 }

@@ -1,23 +1,23 @@
 import { createFileRoute, redirect } from "@tanstack/solid-router";
-import { auth } from "../lib/auth/better-auth-client";
-import { useProviderSignIn } from "../lib/auth/hooks";
+import { auth } from "../../lib/auth/better-auth-client";
+import { useProviderSignIn } from "../../lib/auth/hooks";
+import { defaultWorkspace } from "../__root";
 
-const userDefaultWorkspace = "planar";
-
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_public/")({
   component: HomeRoute,
   pendingComponent: () => <div>LOADING SESSION...</div>,
   beforeLoad: async () => {
     const authentication = await auth.getSession();
 
     if (authentication.data) {
-      throw redirect({
+      redirect({
+        throw: true,
         to: "/$workspace",
-        params: { workspace: userDefaultWorkspace },
+        params: { workspace: defaultWorkspace },
       });
     }
 
-    return { workspace: userDefaultWorkspace };
+    return { workspace: defaultWorkspace };
   },
 });
 
