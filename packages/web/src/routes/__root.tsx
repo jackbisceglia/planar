@@ -6,6 +6,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/solid-router";
+import css from "../index.css?url";
 import { ParentProps } from "solid-js";
 
 // TODO: this should be dynamic based on the user/session
@@ -18,6 +19,7 @@ export const Route = createRootRoute({
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "planar" },
     ],
+    links: [{ rel: "stylesheet", href: css }],
   }),
   context: () => ({ workspace: defaultWorkspace }),
   shellComponent: RootShell,

@@ -38,9 +38,7 @@ function PublicIndexPage() {
       {/* Header */}
       <header style="border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: '16px 0'; position: 'sticky'; top: 0; background: 'rgba(15, 15, 15, 0.95)'; backdrop-filter: 'blur(10px)'; z-index: 50;">
         <nav style="max-width: '1200px'; margin: '0 auto'; padding: '0 24px'; display: 'flex'; align-items: 'center'; justify-content: 'space-between'; height: '64px';">
-          <div style="font-size: '20px'; font-weight: '700'; letter-spacing: '-1px';">
-            ⚡ planar
-          </div>
+          <div class="text-4xl font-bold text-destructive">⚡ planar</div>
           <button
             onclick={() => {
               void signInWithGithub();
