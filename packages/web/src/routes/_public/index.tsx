@@ -62,31 +62,6 @@ function PublicIndexPage() {
           want to ship without the bloat. Simple, fast, and focused on what
           matters.
         </p>
-        <div style="display: 'flex'; gap: '16px'; justify-content: 'center'; flex-wrap: 'wrap';">
-          <button
-            style="padding: '12px 32px'; background: '#ffffff'; color: '#000000'; border: 'none'; border-radius: '8px'; font-weight: '600'; font-size: '16px'; cursor: 'pointer'; transition: 'all 0.2s';"
-            onmouseover={(e) => {
-              e.currentTarget.style.background = "#f0f0f0";
-            }}
-            onmouseout={(e) => {
-              e.currentTarget.style.background = "#ffffff";
-            }}
-          >
-            Get started
-          </button>
-          <a
-            href="#features"
-            style="padding: '12px 32px'; border: '1px solid rgba(255, 255, 255, 0.2)'; border-radius: '8px'; font-weight: '600'; font-size: '16px'; cursor: 'pointer'; text-decoration: 'none'; transition: 'all 0.2s'; display: 'inline-block'; color: '#ffffff';"
-            onmouseover={(e) => {
-              e.currentTarget.style.background = "rgba(255, 255, 255, 0.1)";
-            }}
-            onmouseout={(e) => {
-              e.currentTarget.style.background = "transparent";
-            }}
-          >
-            Learn more
-          </a>
-        </div>
       </section>
 
       {/* Features Section */}
