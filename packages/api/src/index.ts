@@ -8,11 +8,13 @@ import { RuntimeServer } from "./server-runtime";
 import { ApiConfig } from "@planar/core/lib/config/api";
 import { AuthGroupLive } from "./routes.auth";
 import { WebUrl } from "@planar/core/lib/config/web";
+import { WorkspacesGroupLive } from "./routes.workspaces";
 
 // construct the effect api implementation
 const ApiLive = HttpApiBuilder.api(Api)
   .pipe(Layer.provide(IssuesGroupLive))
-  .pipe(Layer.provide(AuthGroupLive));
+  .pipe(Layer.provide(AuthGroupLive))
+  .pipe(Layer.provide(WorkspacesGroupLive));
 
 // construct node http server
 const NodeHttpLive = NodeHttpServer.layerConfig(createServer, {

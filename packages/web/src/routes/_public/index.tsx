@@ -9,10 +9,18 @@ const assertUserUnauthenticatedClientOnly = createIsomorphicFn().client(
     const authentication = await auth.getSession();
 
     if (authentication.data) {
+      const user = authentication.data.user;
+      const storageKey = `planar:active_workspace:${user.id}`;
+      let target = defaultWorkspace;
+      try {
+        const stored = localStorage.getItem(storageKey);
+        if (stored) target = stored;
+      } catch {}
+
       redirect({
         throw: true,
         to: "/$workspace",
-        params: { workspace: defaultWorkspace },
+        params: { workspace: target },
       });
     }
   },

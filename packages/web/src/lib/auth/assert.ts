@@ -28,10 +28,11 @@ export function assertUserIsAuthenticated(
 export function assertWorkspacePathIsValid(
   _auth: AuthenticationData,
   workspaceMatch: string,
+  allowedSlugs: readonly string[] = [defaultWorkspace],
 ) {
-  const temp = defaultWorkspace;
+  const isAllowed = allowedSlugs.includes(workspaceMatch);
 
-  if (temp !== workspaceMatch) {
+  if (!isAllowed) {
     throw new InvalidWorkspaceError("This workspace does not exist");
   }
 }
