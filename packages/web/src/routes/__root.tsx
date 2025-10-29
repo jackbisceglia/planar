@@ -8,9 +8,6 @@ import {
 } from "@tanstack/solid-router";
 import { ParentProps } from "solid-js";
 
-// TODO: this should be dynamic based on the user/session
-export const defaultWorkspace = "planar";
-
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -19,7 +16,6 @@ export const Route = createRootRoute({
       { title: "planar" },
     ],
   }),
-  context: () => ({ workspace: defaultWorkspace }),
   shellComponent: RootShell,
   component: RootComponent,
 });

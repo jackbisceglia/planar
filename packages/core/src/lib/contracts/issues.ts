@@ -5,12 +5,18 @@ import { Issue, IssueInsert } from "../drizzle/schema";
 export const IssuesGroup = HttpApiGroup.make("issues")
   .add(
     HttpApiEndpoint.get("get")`/`
-      .setPayload(Schema.Struct({ id: Schema.String }))
+      .setPayload(Schema.Struct({ 
+        id: Schema.String,
+        organizationId: Schema.String,
+      }))
       .addError(HttpApiError.NotFound)
       .addSuccess(Schema.Union(Issue, Schema.Null)),
   )
   .add(
     HttpApiEndpoint.get("getAll")`/all`
+      .setPayload(Schema.Struct({
+        organizationId: Schema.String,
+      }))
       .addError(HttpApiError.NotFound)
       .addSuccess(Schema.Array(Issue)),
   )

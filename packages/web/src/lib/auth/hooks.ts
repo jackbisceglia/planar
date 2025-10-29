@@ -14,7 +14,7 @@ type ProviderSignInMap = Record<
 const providerSignInConfiguration = {
   github: (homeRoute: string) => ({
     provider: "github",
-    callbackURL: `${webBaseUrl}/${homeRoute}`,
+    callbackURL: `${webBaseUrl}/select-workspace`,
   }),
 } as const satisfies ProviderSignInMap;
 

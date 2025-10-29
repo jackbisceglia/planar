@@ -1,19 +1,33 @@
 import { createFileRoute, redirect } from "@tanstack/solid-router";
 import { auth } from "../../lib/auth/better-auth-client";
 import { useProviderSignIn } from "../../lib/auth/hooks";
-import { defaultWorkspace } from "../__root";
 import { createIsomorphicFn } from "@tanstack/solid-start";
 
 const assertUserUnauthenticatedClientOnly = createIsomorphicFn().client(
   async function () {
     const authentication = await auth.getSession();
 
-    if (authentication.data) {
-      redirect({
-        throw: true,
-        to: "/$workspace",
-        params: { workspace: defaultWorkspace },
-      });
+    if (authentication.data?.user) {
+      // Check if user has any organizations
+      const orgs = await auth.organization.listOrganizations();
+      
+      if (orgs.data && orgs.data.length > 0) {
+        // Get active organization or use first one
+        const activeOrgId = authentication.data.session?.activeOrganizationId;
+        const activeOrg = orgs.data.find((org: any) => org.id === activeOrgId) || orgs.data[0];
+        
+        redirect({
+          throw: true,
+          to: "/$workspace",
+          params: { workspace: activeOrg.slug },
+        });
+      } else {
+        // No organizations, redirect to workspace selection
+        redirect({
+          throw: true,
+          to: "/select-workspace",
+        });
+      }
     }
   },
 );
@@ -23,15 +37,11 @@ export const Route = createFileRoute("/_public/")({
   pendingComponent: () => <div>LOADING SESSION...</div>,
   beforeLoad: async () => {
     await assertUserUnauthenticatedClientOnly();
-
-    return { workspace: defaultWorkspace };
   },
 });
 
 function PublicIndexPage() {
-  const route = Route.useRouteContext();
-
-  const signInWithGithub = useProviderSignIn("github", route().workspace);
+  const signInWithGithub = useProviderSignIn("github", "");
 
   return (
     <div style="min-height: 100vh; background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%); color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">

@@ -12,16 +12,16 @@ export const IssuesGroupLive = HttpApiBuilder.group(
 
     return handlers
       .handle("get", (input) =>
-        entity.get(input.payload.id).pipe(
+        entity.get(input.payload.id, input.payload.organizationId).pipe(
           Effect.catchTags({
             SqlError: toInternalServerError,
             IssueNotFoundError: () => Effect.succeed(null),
           }),
         ),
       )
-      .handle("getAll", () =>
+      .handle("getAll", (input) =>
         entity
-          .getAll()
+          .getAll(input.payload.organizationId)
           .pipe(Effect.catchTags({ SqlError: toInternalServerError })),
       )
       .handle("create", (input) =>

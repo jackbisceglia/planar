@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { organization } from "better-auth/plugins";
 import { Effect, Redacted } from "effect";
 import { Database } from "../drizzle";
 import { AuthConfig } from "../config/auth";
@@ -28,6 +29,14 @@ export const Auth = Effect.gen(function* () {
       },
     },
     database: drizzleAdapter(database, { provider: "pg" }),
+    plugins: [
+      organization({
+        async sendInvitationEmail(data) {
+          // TODO: Implement email sending
+          console.log("SEND INVITATION EMAIL", JSON.stringify(data, null, 2));
+        },
+      }),
+    ],
   });
 
   return betterAuthInstance;

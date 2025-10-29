@@ -15,6 +15,7 @@ import {
 import { MatchTag } from "../../../lib/utils.solid";
 import { slugify } from "../../../lib/utils";
 import { useCleanupEffectRuntime } from "../../../lib/setup/client-runtime";
+import { WorkspaceSwitcher } from "../../../lib/components/WorkspaceSwitcher";
 
 const ErrorComponent = (props: ErrorComponentProps) => {
   const error = ensureTaggedError(props.error);
@@ -39,7 +40,7 @@ export const Route = createFileRoute("/_application/$workspace")({
     const authentication = await auth.getSession();
 
     assertUserIsAuthenticated(authentication);
-    assertWorkspacePathIsValid(authentication, options.params.workspace);
+    await assertWorkspacePathIsValid(authentication, options.params.workspace);
 
     return {
       user: authentication.data.user,
@@ -57,30 +58,44 @@ function WorkspaceLayout() {
   useCleanupEffectRuntime();
 
   return (
-    <main style={{ padding: "1.5rem 12rem" }}>
+    <main style="min-height: 100vh; background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%); color: #ffffff;">
       <nav
-        style={{
-          display: "flex",
-          "justify-content": "space-between",
-          "align-items": "center",
-        }}
+        style="border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); background: rgba(15, 15, 15, 0.95);"
       >
-        <h2>
-          <Link to="/$workspace" params={{ workspace: slug() }}>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <WorkspaceSwitcher currentSlug={slug()} />
+          <Link 
+            to="/$workspace" 
+            params={{ workspace: slug() }}
+            style="font-size: 20px; font-weight: 700; color: #ffffff; text-decoration: none; letter-spacing: -0.5px;"
+          >
             {workspaceDisplay()}
           </Link>
-        </h2>
+        </div>
 
-        <button
-          onClick={() => {
-            void signOut();
-          }}
-        >
-          Sign Out
-        </button>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <span style="color: #a0a0a0; font-size: 14px;">
+            {user().name}
+          </span>
+          <button
+            onClick={() => {
+              void signOut();
+            }}
+            style="padding: 8px 16px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 6px; color: #ffffff; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 14px;"
+            onmouseover={(e) => {
+              e.currentTarget.style.background = "rgba(255, 255, 255, 0.15)";
+            }}
+            onmouseout={(e) => {
+              e.currentTarget.style.background = "rgba(255, 255, 255, 0.1)";
+            }}
+          >
+            Sign Out
+          </button>
+        </div>
       </nav>
-      <p>hey, {user().name.toLowerCase()}</p>
-      <Outlet />
+      <div style="padding: 32px 24px; max-width: 1200px; margin: 0 auto;">
+        <Outlet />
+      </div>
     </main>
   );
 }
