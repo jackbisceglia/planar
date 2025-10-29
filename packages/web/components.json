@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/index.css",
+    "baseColor": "stone",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "lib": "~/lib",
+    "utils": "~/lib/utils/index",
+    "components": "~/lib/components",
+    "ui": "~/lib/components/ui",
+    "hooks": "~/lib/hooks"
+  },
+  "registries": {
+    "@solid": "https://solid-ui.com/r/{name}.json"
+  }
+}

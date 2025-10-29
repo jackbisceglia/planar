@@ -12,7 +12,7 @@ import {
   assertUserIsAuthenticated,
   assertWorkspacePathIsValid,
 } from "../../../lib/auth/assert";
-import { MatchTag } from "../../../lib/utils.solid";
+import { MatchTag } from "../../../lib/utils/solid";
 import { slugify } from "../../../lib/utils";
 import { useCleanupEffectRuntime } from "../../../lib/setup/client-runtime";
 

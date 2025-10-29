@@ -6,6 +6,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/solid-router";
+import css from "../index.css?url";
 import { ParentProps } from "solid-js";
 
 // TODO: this should be dynamic based on the user/session
@@ -17,6 +18,10 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "planar" },
+    ],
+    links: [
+      { rel: "icon", href: "/favicon.ico" },
+      { rel: "stylesheet", href: css },
     ],
   }),
   context: () => ({ workspace: defaultWorkspace }),
@@ -30,7 +35,7 @@ function RootShell(props: ParentProps) {
       <head>
         <HydrationScript />
       </head>
-      <body style={{ margin: 0 }}>
+      <body>
         <HeadContent />
         {props.children}
         <Scripts />

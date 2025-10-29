@@ -8,7 +8,9 @@
     "target": "ES2022",
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "lib": ["dom", "dom.iterable", "es2024"]
+    "lib": ["dom", "dom.iterable", "es2024"],
+    "baseUrl": ".",
+    "paths": { "~/*": ["./src/*"] }
   },
   "include": ["src", "vite.config.ts"]
 }
