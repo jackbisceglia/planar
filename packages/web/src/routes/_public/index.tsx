@@ -113,7 +113,7 @@ function PublicIndexPage() {
               Planar is a purpose-built clone for tracking issues and shipping
               work
             </h1>
-            <p class="mt-6 font-light text-xs text-muted-foreground md:text-lg max-w-1/2">
+            <p class="mt-6 font-light text-sm text-muted-foreground md:text-lg max-w-none md:max-w-[620px]">
               Planar is a fast, minimal issue tracker. Create issues, plan
               projects, and ship work—without the bloat.
             </p>
@@ -182,7 +182,7 @@ function HeroGraphic() {
   return (
     <div
       aria-hidden="true"
-      class="select-none pointer-events-none absolute inset-x-0 top-52 z-0 mx-auto block w-full max-w-5xl transform-gpu translate-x-0 sm:top-40 sm:max-w-6xl sm:-translate-x-[2%] md:top-44 md:max-w-7xl md:-translate-x-[6%]"
+      class="select-none pointer-events-none absolute inset-x-0 top-60 z-0 mx-auto block w-full max-w-5xl transform-gpu translate-x-0 origin-top-right scale-[0.7] sm:top-44 sm:max-w-6xl sm:scale-[0.85] sm:-translate-x-[2%] md:top-44 md:max-w-7xl md:scale-100 md:-translate-x-[6%]"
     >
       <div class="relative perspective-[2200px]">
         <div class="relative mx-auto w-full overflow-hidden rounded-xl border bg-card/40 shadow-2xl ring-1 ring-black/30 backdrop-blur supports-backdrop-filter:bg-card/40 transform-[rotateX(6deg)_rotateY(-8deg)_rotateZ(0deg)_scale(1.02)] sm:transform-[rotateX(10deg)_rotateY(-18deg)_rotateZ(1deg)_scale(1.06)] md:transform-[rotateX(12deg)_rotateY(-22deg)_rotateZ(1deg)_scale(1.08)]">
