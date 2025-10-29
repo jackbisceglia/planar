@@ -28,5 +28,8 @@
   "packageManager": "pnpm@10.18.3",
   "engines": {
     "node": "22.20.0"
+  },
+  "dependencies": {
+    "nanoid": "^5.1.6"
   }
 }

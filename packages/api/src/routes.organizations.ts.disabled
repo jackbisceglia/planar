@@ -1,0 +1,170 @@
+import { HttpApiBuilder } from "@effect/platform";
+import { Effect } from "effect";
+import { 
+  OrganizationsGroup, 
+  WorkspacesGroup, 
+  MembersGroup, 
+  InvitationsGroup 
+} from "@planar/core/lib/contracts/organizations";
+import { OrganizationService } from "@planar/core/modules/organizations/entity";
+
+export const organizationsRoutes = HttpApiBuilder.group(
+  OrganizationsGroup,
+  "organizations",
+  (handlers) =>
+    Effect.gen(function* () {
+      const orgService = yield* OrganizationService;
+
+      return handlers
+        .handle("getUserOrganizations", () =>
+          Effect.gen(function* () {
+            // TODO: Get user from session
+            const userId = "temp-user-id"; // This will be replaced with actual session user
+            return yield* orgService.getUserOrganizations(userId);
+          })
+        )
+        .handle("getOrganization", ({ path: { organizationId } }) =>
+          Effect.gen(function* () {
+            // TODO: Implement get single organization with access check
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        )
+        .handle("createOrganization", ({ payload }) =>
+          Effect.gen(function* () {
+            // TODO: Get user from session
+            const userId = "temp-user-id";
+            return yield* orgService.createOrganization(payload, userId);
+          })
+        )
+        .handle("updateOrganization", ({ path: { organizationId }, payload }) =>
+          Effect.gen(function* () {
+            // TODO: Implement update organization with access check
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        )
+        .handle("deleteOrganization", ({ path: { organizationId } }) =>
+          Effect.gen(function* () {
+            // TODO: Implement delete organization with access check
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        );
+    })
+);
+
+export const workspacesRoutes = HttpApiBuilder.group(
+  WorkspacesGroup,
+  "workspaces",
+  (handlers) =>
+    Effect.gen(function* () {
+      const orgService = yield* OrganizationService;
+
+      return handlers
+        .handle("getWorkspace", ({ path: { workspaceId } }) =>
+          Effect.gen(function* () {
+            // TODO: Implement get workspace with access check
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        )
+        .handle("createWorkspace", ({ payload }) =>
+          Effect.gen(function* () {
+            // TODO: Get user from session
+            const userId = "temp-user-id";
+            return yield* orgService.createWorkspace(payload, userId);
+          })
+        )
+        .handle("updateWorkspace", ({ path: { workspaceId }, payload }) =>
+          Effect.gen(function* () {
+            // TODO: Implement update workspace with access check
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        )
+        .handle("deleteWorkspace", ({ path: { workspaceId } }) =>
+          Effect.gen(function* () {
+            // TODO: Implement delete workspace with access check
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        )
+        .handle("getWorkspaceMembers", ({ path: { workspaceId } }) =>
+          Effect.gen(function* () {
+            // TODO: Implement get workspace members with access check
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        )
+        .handle("inviteToWorkspace", ({ path: { workspaceId }, payload }) =>
+          Effect.gen(function* () {
+            // TODO: Get user from session
+            const userId = "temp-user-id";
+            return yield* orgService.createInvitation(
+              "", // TODO: Get org ID from workspace
+              workspaceId,
+              payload.email,
+              payload.role,
+              userId
+            );
+          })
+        );
+    })
+);
+
+export const membersRoutes = HttpApiBuilder.group(
+  MembersGroup,
+  "members",
+  (handlers) =>
+    Effect.gen(function* () {
+      return handlers
+        .handle("updateOrganizationMember", ({ path: { organizationId, userId }, payload }) =>
+          Effect.gen(function* () {
+            // TODO: Implement update organization member role
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        )
+        .handle("removeOrganizationMember", ({ path: { organizationId, userId } }) =>
+          Effect.gen(function* () {
+            // TODO: Implement remove organization member
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        )
+        .handle("updateWorkspaceMember", ({ path: { workspaceId, userId }, payload }) =>
+          Effect.gen(function* () {
+            // TODO: Implement update workspace member role
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        )
+        .handle("removeWorkspaceMember", ({ path: { workspaceId, userId } }) =>
+          Effect.gen(function* () {
+            // TODO: Implement remove workspace member
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        );
+    })
+);
+
+export const invitationsRoutes = HttpApiBuilder.group(
+  InvitationsGroup,
+  "invitations",
+  (handlers) =>
+    Effect.gen(function* () {
+      const orgService = yield* OrganizationService;
+
+      return handlers
+        .handle("getInvitation", ({ path: { token } }) =>
+          Effect.gen(function* () {
+            // TODO: Implement get invitation details
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        )
+        .handle("acceptInvitation", ({ path: { token } }) =>
+          Effect.gen(function* () {
+            // TODO: Get user from session
+            const userId = "temp-user-id";
+            return yield* orgService.acceptInvitation(token, userId);
+          })
+        )
+        .handle("declineInvitation", ({ path: { token } }) =>
+          Effect.gen(function* () {
+            // TODO: Implement decline invitation
+            return yield* Effect.fail(new Error("Not implemented"));
+          })
+        );
+    })
+);

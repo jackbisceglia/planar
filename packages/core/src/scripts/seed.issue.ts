@@ -7,14 +7,17 @@ const mocks = [
   {
     title: "title 1",
     description: "description 1",
+    workspace_id: "placeholder-workspace-id", // TODO: Use actual workspace ID
   },
   {
     title: "title 2",
     description: "description 2",
+    workspace_id: "placeholder-workspace-id", // TODO: Use actual workspace ID
   },
   {
     title: "title 3",
     description: "description 3",
+    workspace_id: "placeholder-workspace-id", // TODO: Use actual workspace ID
   },
 ] satisfies IssueInsert[];
 

@@ -7,12 +7,29 @@ import { Api } from "@planar/core/lib/contracts/index";
 import { RuntimeServer } from "./server-runtime";
 import { ApiConfig } from "@planar/core/lib/config/api";
 import { AuthGroupLive } from "./routes.auth";
+// TODO: Re-enable organization imports after fixing type issues
+// import { 
+//   organizationsRoutes, 
+//   workspacesRoutes, 
+//   membersRoutes, 
+//   invitationsRoutes 
+// } from "./routes.organizations";
 import { WebUrl } from "@planar/core/lib/config/web";
+// import { OrganizationService } from "@planar/core/modules/organizations/entity";
+
+// TODO: Re-enable organization service layer
+// const OrganizationServiceLive = OrganizationService;
 
 // construct the effect api implementation
 const ApiLive = HttpApiBuilder.api(Api)
   .pipe(Layer.provide(IssuesGroupLive))
-  .pipe(Layer.provide(AuthGroupLive));
+  .pipe(Layer.provide(AuthGroupLive))
+  // TODO: Re-enable organization routes after fixing type issues
+  // .pipe(Layer.provide(organizationsRoutes))
+  // .pipe(Layer.provide(workspacesRoutes))
+  // .pipe(Layer.provide(membersRoutes))
+  // .pipe(Layer.provide(invitationsRoutes))
+  // .pipe(Layer.provide(OrganizationServiceLive));
 
 // construct node http server
 const NodeHttpLive = NodeHttpServer.layerConfig(createServer, {
