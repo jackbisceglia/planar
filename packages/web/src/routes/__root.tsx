@@ -19,7 +19,10 @@ export const Route = createRootRoute({
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "planar" },
     ],
-    links: [{ rel: "stylesheet", href: css }],
+    links: [
+      { rel: "icon", href: "/favicon.ico" },
+      { rel: "stylesheet", href: css },
+    ],
   }),
   context: () => ({ workspace: defaultWorkspace }),
   shellComponent: RootShell,
@@ -32,7 +35,7 @@ function RootShell(props: ParentProps) {
       <head>
         <HydrationScript />
       </head>
-      <body style={{ margin: 0 }}>
+      <body>
         <HeadContent />
         {props.children}
         <Scripts />

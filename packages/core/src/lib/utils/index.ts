@@ -31,3 +31,7 @@ export type NonNullableNested<
     [P2 in K2]: NonNullable<NonNullable<T[P1]>[P2]>;
   };
 };
+
+export type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
