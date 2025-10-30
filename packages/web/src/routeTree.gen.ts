@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicLayoutRouteImport } from './routes/_public/layout'
+import { Route as ApplicationLayoutRouteImport } from './routes/_application/layout'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as ApplicationWorkspaceLayoutRouteImport } from './routes/_application/$workspace/layout'
 import { Route as ApplicationWorkspaceIndexRouteImport } from './routes/_application/$workspace/index'
+import { Route as ApplicationWorkspaceJoinRouteImport } from './routes/_application/workspace.join'
 
 const PublicLayoutRoute = PublicLayoutRouteImport.update({
   id: '/_public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApplicationLayoutRoute = ApplicationLayoutRouteImport.update({
+  id: '/_application',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
@@ -25,9 +31,9 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
 } as any)
 const ApplicationWorkspaceLayoutRoute =
   ApplicationWorkspaceLayoutRouteImport.update({
-    id: '/_application/$workspace',
+    id: '/$workspace',
     path: '/$workspace',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => ApplicationLayoutRoute,
   } as any)
 const ApplicationWorkspaceIndexRoute =
   ApplicationWorkspaceIndexRouteImport.update({
@@ -35,39 +41,51 @@ const ApplicationWorkspaceIndexRoute =
     path: '/',
     getParentRoute: () => ApplicationWorkspaceLayoutRoute,
   } as any)
+const ApplicationWorkspaceJoinRoute =
+  ApplicationWorkspaceJoinRouteImport.update({
+    id: '/workspace/join',
+    path: '/workspace/join',
+    getParentRoute: () => ApplicationLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/$workspace': typeof ApplicationWorkspaceLayoutRouteWithChildren
   '/': typeof PublicIndexRoute
+  '/workspace/join': typeof ApplicationWorkspaceJoinRoute
   '/$workspace/': typeof ApplicationWorkspaceIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
+  '/workspace/join': typeof ApplicationWorkspaceJoinRoute
   '/$workspace': typeof ApplicationWorkspaceIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/_application': typeof ApplicationLayoutRouteWithChildren
   '/_public': typeof PublicLayoutRouteWithChildren
   '/_application/$workspace': typeof ApplicationWorkspaceLayoutRouteWithChildren
   '/_public/': typeof PublicIndexRoute
+  '/_application/workspace/join': typeof ApplicationWorkspaceJoinRoute
   '/_application/$workspace/': typeof ApplicationWorkspaceIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/$workspace' | '/' | '/$workspace/'
+  fullPaths: '/$workspace' | '/' | '/workspace/join' | '/$workspace/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$workspace'
+  to: '/' | '/workspace/join' | '/$workspace'
   id:
     | '__root__'
+    | '/_application'
     | '/_public'
     | '/_application/$workspace'
     | '/_public/'
+    | '/_application/workspace/join'
     | '/_application/$workspace/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  ApplicationLayoutRoute: typeof ApplicationLayoutRouteWithChildren
   PublicLayoutRoute: typeof PublicLayoutRouteWithChildren
-  ApplicationWorkspaceLayoutRoute: typeof ApplicationWorkspaceLayoutRouteWithChildren
 }
 
 declare module '@tanstack/solid-router' {
@@ -77,6 +95,13 @@ declare module '@tanstack/solid-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof PublicLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_application': {
+      id: '/_application'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof ApplicationLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_public/': {
@@ -91,7 +116,7 @@ declare module '@tanstack/solid-router' {
       path: '/$workspace'
       fullPath: '/$workspace'
       preLoaderRoute: typeof ApplicationWorkspaceLayoutRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ApplicationLayoutRoute
     }
     '/_application/$workspace/': {
       id: '/_application/$workspace/'
@@ -100,20 +125,15 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof ApplicationWorkspaceIndexRouteImport
       parentRoute: typeof ApplicationWorkspaceLayoutRoute
     }
+    '/_application/workspace/join': {
+      id: '/_application/workspace/join'
+      path: '/workspace/join'
+      fullPath: '/workspace/join'
+      preLoaderRoute: typeof ApplicationWorkspaceJoinRouteImport
+      parentRoute: typeof ApplicationLayoutRoute
+    }
   }
 }
-
-interface PublicLayoutRouteChildren {
-  PublicIndexRoute: typeof PublicIndexRoute
-}
-
-const PublicLayoutRouteChildren: PublicLayoutRouteChildren = {
-  PublicIndexRoute: PublicIndexRoute,
-}
-
-const PublicLayoutRouteWithChildren = PublicLayoutRoute._addFileChildren(
-  PublicLayoutRouteChildren,
-)
 
 interface ApplicationWorkspaceLayoutRouteChildren {
   ApplicationWorkspaceIndexRoute: typeof ApplicationWorkspaceIndexRoute
@@ -129,9 +149,34 @@ const ApplicationWorkspaceLayoutRouteWithChildren =
     ApplicationWorkspaceLayoutRouteChildren,
   )
 
-const rootRouteChildren: RootRouteChildren = {
-  PublicLayoutRoute: PublicLayoutRouteWithChildren,
+interface ApplicationLayoutRouteChildren {
+  ApplicationWorkspaceLayoutRoute: typeof ApplicationWorkspaceLayoutRouteWithChildren
+  ApplicationWorkspaceJoinRoute: typeof ApplicationWorkspaceJoinRoute
+}
+
+const ApplicationLayoutRouteChildren: ApplicationLayoutRouteChildren = {
   ApplicationWorkspaceLayoutRoute: ApplicationWorkspaceLayoutRouteWithChildren,
+  ApplicationWorkspaceJoinRoute: ApplicationWorkspaceJoinRoute,
+}
+
+const ApplicationLayoutRouteWithChildren =
+  ApplicationLayoutRoute._addFileChildren(ApplicationLayoutRouteChildren)
+
+interface PublicLayoutRouteChildren {
+  PublicIndexRoute: typeof PublicIndexRoute
+}
+
+const PublicLayoutRouteChildren: PublicLayoutRouteChildren = {
+  PublicIndexRoute: PublicIndexRoute,
+}
+
+const PublicLayoutRouteWithChildren = PublicLayoutRoute._addFileChildren(
+  PublicLayoutRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  ApplicationLayoutRoute: ApplicationLayoutRouteWithChildren,
+  PublicLayoutRoute: PublicLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

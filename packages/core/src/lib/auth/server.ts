@@ -6,6 +6,7 @@ import { AuthConfig } from "../config/auth";
 import { WebUrl } from "../config/web";
 import { application, withStage } from "../config/meta";
 import { ApiUrl } from "../config/api";
+import { organization } from "better-auth/plugins";
 
 export const Auth = Effect.gen(function* () {
   const database = yield* Database;
@@ -28,6 +29,7 @@ export const Auth = Effect.gen(function* () {
       },
     },
     database: drizzleAdapter(database, { provider: "pg" }),
+    plugins: [organization()],
   });
 
   return betterAuthInstance;

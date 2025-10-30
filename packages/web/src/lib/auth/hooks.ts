@@ -28,7 +28,7 @@ export const useAuthentication = auth.useSession;
  */
 export const useUser = () =>
   getRouteApi("/_application/$workspace").useRouteContext({
-    select: (s) => s.user,
+    select: (s) => s.authentication.user,
   });
 
 /**

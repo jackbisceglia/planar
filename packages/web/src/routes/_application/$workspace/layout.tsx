@@ -4,19 +4,16 @@ import {
   Link,
   Outlet,
 } from "@tanstack/solid-router";
-import { auth } from "../../../lib/auth/better-auth-client";
 import { useSignOut, useUser } from "../../../lib/auth/hooks";
 import { ensureTaggedError } from "@planar/core/lib/effect/error";
 import { Switch } from "solid-js";
-import {
-  assertUserIsAuthenticated,
-  assertWorkspacePathIsValid,
-} from "../../../lib/auth/assert";
 import { MatchTag } from "../../../lib/utils/solid";
 import { slugify } from "../../../lib/utils";
-import { useCleanupEffectRuntime } from "../../../lib/setup/client-runtime";
+import { assertUserCanAccessWorkspace } from "~/lib/auth/assert";
 
 const ErrorComponent = (props: ErrorComponentProps) => {
+  console.log("has error in layout", JSON.stringify(props.error, null, 2));
+
   const error = ensureTaggedError(props.error);
 
   return (
@@ -32,29 +29,21 @@ const ErrorComponent = (props: ErrorComponentProps) => {
 };
 
 export const Route = createFileRoute("/_application/$workspace")({
-  ssr: false,
   component: WorkspaceLayout,
   errorComponent: ErrorComponent,
-  beforeLoad: async (options) => {
-    const authentication = await auth.getSession();
+  beforeLoad: (options) => {
+    const authentication = options.context.authentication;
 
-    assertUserIsAuthenticated(authentication);
-    assertWorkspacePathIsValid(authentication, options.params.workspace);
-
-    return {
-      user: authentication.data.user,
-    };
+    assertUserCanAccessWorkspace(authentication, options.params.workspace);
   },
 });
 
 function WorkspaceLayout() {
-  const user = useUser();
   const slug = Route.useRouteContext({ select: (s) => s.workspace });
+  const user = useUser();
   const signOut = useSignOut();
 
   const workspaceDisplay = () => slugify.decodeCapitalized(slug());
-
-  useCleanupEffectRuntime();
 
   return (
     <main style={{ padding: "1.5rem 12rem" }}>
@@ -79,6 +68,7 @@ function WorkspaceLayout() {
           Sign Out
         </button>
       </nav>
+      {/* for some reason this is throwing even though we first check if user exists */}
       <p>hey, {user().name.toLowerCase()}</p>
       <Outlet />
     </main>

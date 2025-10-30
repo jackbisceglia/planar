@@ -68,6 +68,7 @@ export const Route = createFileRoute("/_public/")({
   component: PublicIndexPage,
   pendingComponent: () => <div>LOADING SESSION...</div>,
   beforeLoad: async () => {
+    // how to run client only but on first load
     await assertUserUnauthenticatedClientOnly();
 
     return { workspace: defaultWorkspace };
