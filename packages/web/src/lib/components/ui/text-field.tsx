@@ -1,5 +1,5 @@
-import type { ValidComponent } from "solid-js";
-import { mergeProps, splitProps } from "solid-js";
+import type { ComponentProps, ValidComponent } from "solid-js";
+import { createSignal, mergeProps, splitProps } from "solid-js";
 
 import type { PolymorphicProps } from "@kobalte/core";
 import * as TextFieldPrimitive from "@kobalte/core/text-field";
@@ -18,11 +18,24 @@ const TextField = <T extends ValidComponent = "div">(
   const [local, others] = splitProps(props as TextFieldRootProps, ["class"]);
   return (
     <TextFieldPrimitive.Root
-      class={cn("flex flex-col gap-1", local.class)}
+      class={cn("flex flex-col gap-2", local.class)}
       {...others}
     />
   );
 };
+
+export function useBoundTextField(initialValue: string) {
+  const signal = createSignal(initialValue);
+  const [get, set] = signal;
+
+  const TextFieldInner = (
+    props: Omit<ComponentProps<typeof TextField>, "value" | "onChange">,
+  ) => {
+    return <TextField value={get()} onChange={set} {...props} />;
+  };
+
+  return [[get, set] as const, TextFieldInner] as const;
+}
 
 type TextFieldInputProps<T extends ValidComponent = "input"> =
   TextFieldPrimitive.TextFieldInputProps<T> & {
@@ -67,7 +80,7 @@ const TextFieldInput = <T extends ValidComponent = "input">(
     <TextFieldPrimitive.Input
       type={local.type}
       class={cn(
-        "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[invalid]:border-error-foreground data-[invalid]:text-error-foreground",
+        "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 data-[invalid]:border-error-foreground data-[invalid]:text-error-foreground",
         local.class,
       )}
       {...others}

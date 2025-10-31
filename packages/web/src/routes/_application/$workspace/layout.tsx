@@ -8,12 +8,10 @@ import { useSignOut, useUser } from "../../../lib/auth/hooks";
 import { ensureTaggedError } from "@planar/core/lib/effect/error";
 import { Switch } from "solid-js";
 import { MatchTag } from "../../../lib/utils/solid";
-import { slugify } from "../../../lib/utils";
-import { assertUserCanAccessWorkspace } from "~/lib/auth/assert";
+import { auth } from "~/lib/auth/better-auth-client";
+// import { assertUserCanAccessWorkspace } from "~/lib/auth/assert";
 
 const ErrorComponent = (props: ErrorComponentProps) => {
-  console.log("has error in layout", JSON.stringify(props.error, null, 2));
-
   const error = ensureTaggedError(props.error);
 
   return (
@@ -31,21 +29,21 @@ const ErrorComponent = (props: ErrorComponentProps) => {
 export const Route = createFileRoute("/_application/$workspace")({
   component: WorkspaceLayout,
   errorComponent: ErrorComponent,
-  beforeLoad: (options) => {
-    const authentication = options.context.authentication;
-
-    assertUserCanAccessWorkspace(authentication, options.params.workspace);
+  beforeLoad: (_options) => {
+    // const authentication = options.context.authentication;
+    // TODO: add logic to check, once i figre out non-hook workspace logic
+    // assertUserCanAccessWorkspace(authentication, options.params.workspace);
   },
 });
 
 function WorkspaceLayout() {
-  const slug = Route.useRouteContext({ select: (s) => s.workspace });
   const user = useUser();
   const signOut = useSignOut();
-
-  const workspaceDisplay = () => slugify.decodeCapitalized(slug());
+  const workspace = auth.useActiveOrganization();
 
   return (
+    // <Show when={workspace().data}>
+    // {(workspace) => (
     <main style={{ padding: "1.5rem 12rem" }}>
       <nav
         style={{
@@ -55,8 +53,11 @@ function WorkspaceLayout() {
         }}
       >
         <h2>
-          <Link to="/$workspace" params={{ workspace: slug() }}>
-            {workspaceDisplay()}
+          <Link
+            to="/$workspace"
+            params={{ workspace: workspace().data?.slug ?? "" }}
+          >
+            {workspace().data?.name}
           </Link>
         </h2>
 
@@ -72,5 +73,7 @@ function WorkspaceLayout() {
       <p>hey, {user().name.toLowerCase()}</p>
       <Outlet />
     </main>
+    // )}
+    // </Show>
   );
 }

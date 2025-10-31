@@ -29,7 +29,7 @@ export const Auth = Effect.gen(function* () {
       },
     },
     database: drizzleAdapter(database, { provider: "pg" }),
-    plugins: [organization()],
+    plugins: [organization({})],
   });
 
   return betterAuthInstance;

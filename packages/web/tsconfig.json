@@ -10,7 +10,8 @@
     "strictNullChecks": true,
     "lib": ["dom", "dom.iterable", "es2024"],
     "baseUrl": ".",
-    "paths": { "~/*": ["./src/*"] }
+    "paths": { "~/*": ["./src/*"] },
+    "exactOptionalPropertyTypes": false
   },
   "include": ["src", "vite.config.ts"]
 }

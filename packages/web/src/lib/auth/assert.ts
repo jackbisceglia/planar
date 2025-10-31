@@ -17,10 +17,8 @@ type AuthenticationDataChecked = NonNullableNested<
 
 export function assertUserIsAuthenticated(
   data: AuthenticationData["data"],
-  error: unknown,
+  error?: unknown,
 ): asserts data is AuthenticationDataChecked["data"] {
-  console.log("has error", JSON.stringify(error, null, 2));
-  console.log("has data", JSON.stringify(data, null, 2));
   if (error || !data) {
     redirect({ throw: true, to: "/" });
   }

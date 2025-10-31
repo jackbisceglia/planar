@@ -27,7 +27,7 @@ export const useAuthentication = auth.useSession;
  * Re-export of auth.useSession for authentication state management
  */
 export const useUser = () =>
-  getRouteApi("/_application/$workspace").useRouteContext({
+  getRouteApi("/_application").useRouteContext({
     select: (s) => s.authentication.user,
   });
 

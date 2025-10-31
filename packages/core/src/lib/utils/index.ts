@@ -1,3 +1,5 @@
+import { TaggedError } from "../effect/error";
+
 /**
  * iife helper - invokes a function immediately and returns its result
  *
@@ -35,3 +37,5 @@ export type NonNullableNested<
 export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {};
+
+export class UnknownError extends TaggedError("UnknownError") {}

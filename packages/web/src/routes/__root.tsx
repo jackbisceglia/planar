@@ -24,6 +24,11 @@ export const Route = createRootRoute({
       { rel: "stylesheet", href: css },
     ],
   }),
+  errorComponent: (error) => {
+    return (
+      <div>uh oh, something went wrong - {JSON.stringify(error, null, 2)}</div>
+    );
+  },
   context: () => ({ workspace: defaultWorkspace }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -31,11 +36,11 @@ export const Route = createRootRoute({
 
 function RootShell(props: ParentProps) {
   return (
-    <html>
+    <html class="dark">
       <head>
         <HydrationScript />
       </head>
-      <body>
+      <body class="h-svh min-h-svh">
         <HeadContent />
         {props.children}
         <Scripts />

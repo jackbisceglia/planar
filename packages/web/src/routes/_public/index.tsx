@@ -86,7 +86,7 @@ function PublicIndexPage() {
         <nav class="max-w-5xl flex h-16 items-center justify-between mx-auto">
           <Link
             to="."
-            class="flex items-center gap-2 text-xl tracking-tight text-primary"
+            class="flex items-center gap-2 text-xl tracking-tight text-foreground"
           >
             <Logo /> planar
           </Link>
@@ -148,9 +148,12 @@ function PublicIndexPage() {
             </p>
             <div class="mt-6 flex justify-center">
               <Button
-                onClick={() => {
-                  void signInWithGithub();
-                }}
+                variant="secondary"
+                // onClick={() => {
+                //   void navigate({
+                //     to: "/join",
+                //   });
+                // }}
               >
                 Start building
               </Button>

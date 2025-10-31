@@ -12,9 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicLayoutRouteImport } from './routes/_public/layout'
 import { Route as ApplicationLayoutRouteImport } from './routes/_application/layout'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as ApplicationJoinRouteImport } from './routes/_application/join'
 import { Route as ApplicationWorkspaceLayoutRouteImport } from './routes/_application/$workspace/layout'
 import { Route as ApplicationWorkspaceIndexRouteImport } from './routes/_application/$workspace/index'
-import { Route as ApplicationWorkspaceJoinRouteImport } from './routes/_application/workspace.join'
 
 const PublicLayoutRoute = PublicLayoutRouteImport.update({
   id: '/_public',
@@ -29,6 +29,11 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PublicLayoutRoute,
 } as any)
+const ApplicationJoinRoute = ApplicationJoinRouteImport.update({
+  id: '/join',
+  path: '/join',
+  getParentRoute: () => ApplicationLayoutRoute,
+} as any)
 const ApplicationWorkspaceLayoutRoute =
   ApplicationWorkspaceLayoutRouteImport.update({
     id: '/$workspace',
@@ -41,22 +46,16 @@ const ApplicationWorkspaceIndexRoute =
     path: '/',
     getParentRoute: () => ApplicationWorkspaceLayoutRoute,
   } as any)
-const ApplicationWorkspaceJoinRoute =
-  ApplicationWorkspaceJoinRouteImport.update({
-    id: '/workspace/join',
-    path: '/workspace/join',
-    getParentRoute: () => ApplicationLayoutRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/$workspace': typeof ApplicationWorkspaceLayoutRouteWithChildren
+  '/join': typeof ApplicationJoinRoute
   '/': typeof PublicIndexRoute
-  '/workspace/join': typeof ApplicationWorkspaceJoinRoute
   '/$workspace/': typeof ApplicationWorkspaceIndexRoute
 }
 export interface FileRoutesByTo {
+  '/join': typeof ApplicationJoinRoute
   '/': typeof PublicIndexRoute
-  '/workspace/join': typeof ApplicationWorkspaceJoinRoute
   '/$workspace': typeof ApplicationWorkspaceIndexRoute
 }
 export interface FileRoutesById {
@@ -64,22 +63,22 @@ export interface FileRoutesById {
   '/_application': typeof ApplicationLayoutRouteWithChildren
   '/_public': typeof PublicLayoutRouteWithChildren
   '/_application/$workspace': typeof ApplicationWorkspaceLayoutRouteWithChildren
+  '/_application/join': typeof ApplicationJoinRoute
   '/_public/': typeof PublicIndexRoute
-  '/_application/workspace/join': typeof ApplicationWorkspaceJoinRoute
   '/_application/$workspace/': typeof ApplicationWorkspaceIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/$workspace' | '/' | '/workspace/join' | '/$workspace/'
+  fullPaths: '/$workspace' | '/join' | '/' | '/$workspace/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/workspace/join' | '/$workspace'
+  to: '/join' | '/' | '/$workspace'
   id:
     | '__root__'
     | '/_application'
     | '/_public'
     | '/_application/$workspace'
+    | '/_application/join'
     | '/_public/'
-    | '/_application/workspace/join'
     | '/_application/$workspace/'
   fileRoutesById: FileRoutesById
 }
@@ -111,6 +110,13 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicLayoutRoute
     }
+    '/_application/join': {
+      id: '/_application/join'
+      path: '/join'
+      fullPath: '/join'
+      preLoaderRoute: typeof ApplicationJoinRouteImport
+      parentRoute: typeof ApplicationLayoutRoute
+    }
     '/_application/$workspace': {
       id: '/_application/$workspace'
       path: '/$workspace'
@@ -124,13 +130,6 @@ declare module '@tanstack/solid-router' {
       fullPath: '/$workspace/'
       preLoaderRoute: typeof ApplicationWorkspaceIndexRouteImport
       parentRoute: typeof ApplicationWorkspaceLayoutRoute
-    }
-    '/_application/workspace/join': {
-      id: '/_application/workspace/join'
-      path: '/workspace/join'
-      fullPath: '/workspace/join'
-      preLoaderRoute: typeof ApplicationWorkspaceJoinRouteImport
-      parentRoute: typeof ApplicationLayoutRoute
     }
   }
 }
@@ -151,12 +150,12 @@ const ApplicationWorkspaceLayoutRouteWithChildren =
 
 interface ApplicationLayoutRouteChildren {
   ApplicationWorkspaceLayoutRoute: typeof ApplicationWorkspaceLayoutRouteWithChildren
-  ApplicationWorkspaceJoinRoute: typeof ApplicationWorkspaceJoinRoute
+  ApplicationJoinRoute: typeof ApplicationJoinRoute
 }
 
 const ApplicationLayoutRouteChildren: ApplicationLayoutRouteChildren = {
   ApplicationWorkspaceLayoutRoute: ApplicationWorkspaceLayoutRouteWithChildren,
-  ApplicationWorkspaceJoinRoute: ApplicationWorkspaceJoinRoute,
+  ApplicationJoinRoute: ApplicationJoinRoute,
 }
 
 const ApplicationLayoutRouteWithChildren =

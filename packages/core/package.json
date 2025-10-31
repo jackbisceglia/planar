@@ -12,6 +12,7 @@
     "db": "tsx ./src/scripts/drizzle-kit.ts",
     "db:seed": "tsx ./src/scripts/seed.issue.ts",
     "db:reset": "tsx ./src/scripts/seed.reset.ts",
+    "db:fresh": "pnpm db:reset && pnpm db push && pnpm db:seed",
     "auth": "pnpm dlx @better-auth/cli",
     "auth:generate": "pnpm dlx @better-auth/cli@latest generate --config ./src/scripts/better-auth.ts --output ./src/modules/auth/schema.ts"
   },
