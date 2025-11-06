@@ -29,7 +29,7 @@ export const useAuthentication = auth.useSession;
  */
 export const useUser = () =>
   getRouteApi("/_application").useRouteContext({
-    select: (s) => s.authentication.user,
+    select: (s) => s.authentication?.user,
   });
 
 /**
@@ -74,7 +74,7 @@ function authClientResultToExit<T, E>(
  * @param {(client: typeof auth) => Promise<AuthClientResult<T, R>>} fn - Function that takes the auth client and returns a promise of AuthClientResult
  * @returns {Promise<Exit.Exit<T, NonNullable<R>>>} A promise that resolves to an Exit containing either success data or failure cause
  */
-export async function useAuthClientResult<T, R>(
+export async function withAuthClient<T, R>(
   fn: (client: typeof auth) => Promise<AuthClientResult<T, R>>,
 ) {
   return authClientResultToExit(await fn(auth));
