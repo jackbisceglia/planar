@@ -38,4 +38,9 @@ export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {};
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AsyncReturn<T extends (...args: any) => any> = Awaited<
+  ReturnType<T>
+>;
+
 export class UnknownError extends TaggedError("UnknownError") {}

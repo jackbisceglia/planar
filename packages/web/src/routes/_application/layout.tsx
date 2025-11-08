@@ -1,17 +1,31 @@
 import { createFileRoute, Outlet } from "@tanstack/solid-router";
-import { assertUserIsAuthenticated } from "~/lib/auth/assert";
-import { useAuthClientResult } from "~/lib/auth/hooks";
+import { Exit } from "effect";
+import { assertUserIsAuthenticated, withAuthClient } from "~/lib/auth";
 import { useCleanupEffectRuntime } from "~/lib/setup/client-runtime";
+import { handleTopLevelWorkspaceNavigation } from "~/lib/workspace";
 
 export const Route = createFileRoute("/_application")({
   ssr: false,
   component: RouteComponent,
-  beforeLoad: async function () {
-    const result = await useAuthClientResult((c) => c.getSession());
+  beforeLoad: async function (options) {
+    const pathname = options.location.pathname;
 
-    assertUserIsAuthenticated(result);
+    const [authentication, list, active] = await Promise.all([
+      withAuthClient((c) => c.getSession()),
+      withAuthClient((c) => c.organization.list()),
+      withAuthClient((c) => c.organization.getFullOrganization()),
+    ]);
 
-    return { authentication: result.value };
+    assertUserIsAuthenticated(authentication);
+    await handleTopLevelWorkspaceNavigation(active, list, pathname);
+
+    return {
+      authentication: authentication.value,
+      workspaces: {
+        active: Exit.getOrElse(active, () => null),
+        list: Exit.getOrElse(list, () => null),
+      },
+    };
   },
 });
 

@@ -43,6 +43,7 @@ function NewIssueForm() {
 
 export const Route = createFileRoute("/_application/$workspace/")({
   component: WorkspacePage,
+  pendingComponent: () => <p>...</p>,
   loader: async () => {
     const issues = await getIssues();
 
@@ -53,11 +54,13 @@ export const Route = createFileRoute("/_application/$workspace/")({
 function WorkspacePage() {
   const data = Route.useLoaderData();
 
+  const issues = () => data().issues;
+
   return (
     <>
       <NewIssueForm />
       <ul style={{ "list-style-type": "none", padding: "0.125rem 0" }}>
-        <For each={data().issues} fallback={NoIssuesFound}>
+        <For each={issues()} fallback={NoIssuesFound}>
           {(issue) => (
             <li style={{ "list-style-type": "none", padding: "0.025rem 0" }}>
               <h3>{issue.title}</h3>

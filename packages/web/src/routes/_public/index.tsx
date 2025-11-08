@@ -1,9 +1,8 @@
 import { createFileRoute, Link, redirect } from "@tanstack/solid-router";
 import { createIsomorphicFn } from "@tanstack/solid-start";
 import type { ParentProps } from "solid-js";
-import { auth } from "../../lib/auth/better-auth-client";
-import { useProviderSignIn } from "../../lib/auth/hooks";
-import { defaultWorkspace } from "../__root";
+import { auth } from "~/lib/auth";
+import { useProviderSignIn } from "~/lib/auth/hooks";
 import { Button } from "~/lib/components/ui/button";
 import { Separator } from "~/lib/components/ui/separator";
 import { cn } from "~/lib/utils/index";
@@ -17,8 +16,7 @@ const assertUserUnauthenticatedClientOnly = createIsomorphicFn().client(
     if (authentication.data) {
       redirect({
         throw: true,
-        to: "/$workspace",
-        params: { workspace: defaultWorkspace },
+        to: "/workspaces",
       });
     }
   },
@@ -66,19 +64,13 @@ function Footer() {
 
 export const Route = createFileRoute("/_public/")({
   component: PublicIndexPage,
-  pendingComponent: () => <div>LOADING SESSION...</div>,
   beforeLoad: async () => {
-    // how to run client only but on first load
     await assertUserUnauthenticatedClientOnly();
-
-    return { workspace: defaultWorkspace };
   },
 });
 
 function PublicIndexPage() {
-  const route = Route.useRouteContext();
-
-  const signInWithGithub = useProviderSignIn("github", route().workspace);
+  const signInWithGithub = useProviderSignIn("github", "_");
 
   return (
     <Shell>

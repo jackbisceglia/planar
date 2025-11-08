@@ -4,12 +4,11 @@ import {
   Link,
   Outlet,
 } from "@tanstack/solid-router";
-import { useSignOut, useUser } from "../../../lib/auth/hooks";
+import { useSignOut, useUser, useWorkspace } from "../../../lib/auth/hooks";
 import { ensureTaggedError } from "@planar/core/lib/effect/error";
 import { Switch } from "solid-js";
 import { MatchTag } from "../../../lib/utils/solid";
-import { auth } from "~/lib/auth/better-auth-client";
-// import { assertUserCanAccessWorkspace } from "~/lib/auth/assert";
+import { safeThrowRedirect } from "~/lib/navigation";
 
 const ErrorComponent = (props: ErrorComponentProps) => {
   const error = ensureTaggedError(props.error);
@@ -29,21 +28,28 @@ const ErrorComponent = (props: ErrorComponentProps) => {
 export const Route = createFileRoute("/_application/$workspace")({
   component: WorkspaceLayout,
   errorComponent: ErrorComponent,
-  beforeLoad: (_options) => {
-    // const authentication = options.context.authentication;
-    // TODO: add logic to check, once i figre out non-hook workspace logic
-    // assertUserCanAccessWorkspace(authentication, options.params.workspace);
+  beforeLoad: (options) => {
+    const workspaces = options.context.workspaces;
+
+    if (!workspaces.active) {
+      throw safeThrowRedirect({ to: "/workspaces" }, "workspace");
+    }
+
+    return {
+      workspaces: {
+        active: workspaces.active,
+        list: workspaces.list ?? [workspaces.active],
+      },
+    };
   },
 });
 
 function WorkspaceLayout() {
   const user = useUser();
   const signOut = useSignOut();
-  const workspace = auth.useActiveOrganization();
+  const workspace = useWorkspace();
 
   return (
-    // <Show when={workspace().data}>
-    // {(workspace) => (
     <main style={{ padding: "1.5rem 12rem" }}>
       <nav
         style={{
@@ -53,27 +59,28 @@ function WorkspaceLayout() {
         }}
       >
         <h2>
-          <Link
-            to="/$workspace"
-            params={{ workspace: workspace().data?.slug ?? "" }}
-          >
-            {workspace().data?.name}
+          <Link to="/$workspace" params={{ workspace: workspace().slug }}>
+            {workspace().name}
           </Link>
         </h2>
 
-        <button
-          onClick={() => {
-            void signOut();
-          }}
+        <div
+          style={{ display: "flex", gap: "0.75rem", "align-items": "center" }}
         >
-          Sign Out
-        </button>
+          <Link to="/workspaces">
+            <button>Switch workspace</button>
+          </Link>
+          <button
+            onClick={() => {
+              void signOut();
+            }}
+          >
+            Sign Out
+          </button>
+        </div>
       </nav>
-      {/* for some reason this is throwing even though we first check if user exists */}
       <p>hey, {user().name.toLowerCase()}</p>
       <Outlet />
     </main>
-    // )}
-    // </Show>
   );
 }

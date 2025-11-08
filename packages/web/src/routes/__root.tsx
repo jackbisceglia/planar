@@ -29,7 +29,6 @@ export const Route = createRootRoute({
       <div>uh oh, something went wrong - {JSON.stringify(error, null, 2)}</div>
     );
   },
-  context: () => ({ workspace: defaultWorkspace }),
   shellComponent: RootShell,
   component: RootComponent,
 });

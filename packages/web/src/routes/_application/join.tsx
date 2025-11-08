@@ -9,37 +9,20 @@ import {
 import { Flex } from "~/lib/components/ui/flex";
 import { Card, CardContent } from "~/lib/components/ui/card";
 import { prevented } from "~/lib/utils";
-import { useUser } from "~/lib/auth/hooks";
-import { auth } from "~/lib/auth/better-auth-client";
-
-function ArrowLeft() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="size-4"
-    >
-      <path d="m15 18-6-6 6-6" />
-    </svg>
-  );
-}
+import { auth } from "~/lib/auth";
+import { ArrowLeft } from "~/lib/components/arrows";
 
 export const Route = createFileRoute("/_application/join")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const context = Route.useRouteContext();
   const navigate = useNavigate();
   const workspaceUrlBase = "planar.app/";
 
-  // const navigate = useNavigate();
-  const getUser = useUser();
-  const getActiveOrg = auth.useActiveOrganization();
+  const user = () => context().authentication.user;
+  const workspace = () => context().workspaces.active;
 
   // Form state
   const [[name, setName], NameTextField] = useBoundTextField("");
@@ -75,11 +58,11 @@ function RouteComponent() {
       {/* Header */}
       <nav class="z-10">
         <Flex justifyContent="between" alignItems="center">
-          <Show when={getActiveOrg().data}>
-            {(org) => (
+          <Show when={workspace()}>
+            {(w) => (
               <Link
                 to="/$workspace"
-                params={{ workspace: org().slug }}
+                params={{ workspace: w().slug }}
                 class="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 <ArrowLeft />
@@ -93,7 +76,7 @@ function RouteComponent() {
             class="text-left w-min ml-auto py-4 px-5 gap-y-0.5"
           >
             <p class="text-muted-foreground text-xs">Logged in as</p>
-            <p class="text-foreground text-sm">{getUser().email}</p>
+            <p class="text-foreground text-sm">{user().email}</p>
           </Flex>
         </Flex>
       </nav>
